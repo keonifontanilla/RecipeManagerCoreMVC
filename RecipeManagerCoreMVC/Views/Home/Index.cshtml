@@ -10,9 +10,7 @@
         {
             <div class="col-sm">
                 <div class="card">
-                    <div class="card-body">
-                        <p>IMG HERE</p>
-                    </div>
+                    <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
                     <div class="card-footer">
                         <p>@recipe</p>
                     </div>
@@ -25,7 +23,8 @@
         @foreach (var recipe in Model)
         {
             <div class="col-sm-4 mb-4">
-                <div class="card">
+                <div class="card h-100">
+                    <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
                     <div class="card-header">
                         @recipe.RecipeName
                     </div>
