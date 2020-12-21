@@ -1,0 +1,29 @@
+﻿@model RecipeManagerCoreMVC.Models.RecipeModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form method="Post" asp-action="Create">
+    <div class="form-group row">
+        <label asp-for="RecipeName" class="col-sm-2 col-form-label"></label>
+        <input asp-for="RecipeName" class="form-control  col-sm-10" />
+        <span asp-validation-for="RecipeName" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="RecipeDescription" class="col-sm-2 col-form-label"></label>
+        <textarea asp-for="RecipeDescription" class="form-control col-sm-10"></textarea>
+    </div>
+    <div class="form-group row">
+        <label asp-for="RecipeType" class="col-sm-2 col-form-label"></label>
+        <select asp-for="RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
+            .Where(x => x.Value != "0")' class="form-control col-sm-3"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
+</form>
+
+@section Scripts{
+    @{ // Client side validation.
+        <partial name="_ValidationScriptsPartial" /> 
+    }
+}
