@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RecipeManagerCoreMVC.Data;
 using RecipeManagerCoreMVC.Models;
+using RecipeManagerCoreMVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,11 +37,16 @@ namespace RecipeManagerCoreMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(RecipeModel recipeModel)
+        public IActionResult Create(HomeCreateViewModel homeCreateViewModel)
         {
             if (ModelState.IsValid)
             {
-                _db.Add(recipeModel);
+                var recipeIngredient = homeCreateViewModel.RecipeIngredientModel;
+                var instruction = homeCreateViewModel.InstructionModel;
+                instruction.RecipeModel = recipeIngredient.RecipeModel;
+
+                _db.Add(recipeIngredient);
+                _db.Add(instruction);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }

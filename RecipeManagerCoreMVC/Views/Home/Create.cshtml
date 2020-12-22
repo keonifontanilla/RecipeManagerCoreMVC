@@ -1,22 +1,42 @@
-﻿@model RecipeManagerCoreMVC.Models.RecipeModel
+﻿@model RecipeManagerCoreMVC.ViewModels.HomeCreateViewModel
 @{
     ViewData["Title"] = "Create";
 }
 
 <form method="Post" asp-action="Create">
     <div class="form-group row">
-        <label asp-for="RecipeName" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeName" class="form-control  col-sm-10" />
-        <span asp-validation-for="RecipeName" class="text-danger"></span>
+        <label asp-for="RecipeIngredientModel.RecipeModel.RecipeName" class="col-sm-2 col-form-label"></label>
+        <input asp-for="RecipeIngredientModel.RecipeModel.RecipeName" class="form-control col-sm-10" />
+        <span asp-validation-for="RecipeIngredientModel.RecipeModel.RecipeName" class="text-danger"></span>
     </div>
     <div class="form-group row">
-        <label asp-for="RecipeDescription" class="col-sm-2 col-form-label"></label>
-        <textarea asp-for="RecipeDescription" class="form-control col-sm-10"></textarea>
+        <label asp-for="RecipeIngredientModel.RecipeModel.RecipeDescription" class="col-sm-2 col-form-label"></label>
+        <textarea asp-for="RecipeIngredientModel.RecipeModel.RecipeDescription" class="form-control col-sm-10"></textarea>
     </div>
     <div class="form-group row">
-        <label asp-for="RecipeType" class="col-sm-2 col-form-label"></label>
-        <select asp-for="RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
+        <label asp-for="RecipeIngredientModel.RecipeModel.RecipeType" class="col-sm-2 col-form-label"></label>
+        <select asp-for="RecipeIngredientModel.RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
             .Where(x => x.Value != "0")' class="form-control col-sm-3"></select>
+    </div>
+    <div class="form-group row">
+        <div class="input-group">
+            <label asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="col-sm-2 col-form-label"></label>
+            <input asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="form-control col-sm-10" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="input-group">
+            <label asp-for="RecipeIngredientModel.IngredientQuantity" class="col-form-label col-sm-2"></label>
+            <input asp-for="RecipeIngredientModel.IngredientQuantity" class="form-control col-sm-2 mr-5" />
+            <label asp-for="RecipeIngredientModel.IngredientUnit" class="col-form-label col-sm-2"></label>
+            <input asp-for="RecipeIngredientModel.IngredientUnit" class="form-control col-sm-2" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="input-group">
+            <label asp-for="InstructionModel.Instruction" class="col-sm-2 col-form-label"></label>
+            <input asp-for="InstructionModel.Instruction" class="form-control col-sm-10" />
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a asp-action="Index" class="btn btn-primary">Back</a>
