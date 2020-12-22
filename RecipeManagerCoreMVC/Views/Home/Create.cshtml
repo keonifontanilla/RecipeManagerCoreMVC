@@ -19,24 +19,18 @@
             .Where(x => x.Value != "0")' class="form-control col-sm-3"></select>
     </div>
     <div class="form-group row">
-        <div class="input-group">
-            <label asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="col-sm-2 col-form-label"></label>
-            <input asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="form-control col-sm-10" />
-        </div>
+        <label asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="col-sm-2 col-form-label"></label>
+        <input asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="form-control col-sm-10" />
     </div>
     <div class="form-group row">
-        <div class="input-group">
-            <label asp-for="RecipeIngredientModel.IngredientQuantity" class="col-form-label col-sm-2"></label>
-            <input asp-for="RecipeIngredientModel.IngredientQuantity" class="form-control col-sm-2 mr-5" />
-            <label asp-for="RecipeIngredientModel.IngredientUnit" class="col-form-label col-sm-2"></label>
-            <input asp-for="RecipeIngredientModel.IngredientUnit" class="form-control col-sm-2" />
-        </div>
+        <label asp-for="RecipeIngredientModel.IngredientQuantity" class="col-form-label col-sm-2"></label>
+        <input asp-for="RecipeIngredientModel.IngredientQuantity" class="form-control col-sm-2 mr-5" />
+        <label asp-for="RecipeIngredientModel.IngredientUnit" class="col-form-label col-sm-2"></label>
+        <input asp-for="RecipeIngredientModel.IngredientUnit" class="form-control col-sm-2" />
     </div>
     <div class="form-group row">
-        <div class="input-group">
-            <label asp-for="InstructionModel.Instruction" class="col-sm-2 col-form-label"></label>
-            <input asp-for="InstructionModel.Instruction" class="form-control col-sm-10" />
-        </div>
+        <label asp-for="InstructionModel.Instruction" class="col-sm-2 col-form-label"></label>
+        <input asp-for="InstructionModel.Instruction" class="form-control col-sm-10" />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a asp-action="Index" class="btn btn-primary">Back</a>
