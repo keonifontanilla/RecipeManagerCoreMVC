@@ -15,5 +15,13 @@ namespace RecipeManagerCoreMVC.Data
         }
 
         public DbSet<RecipeModel> Recipes { get; set; }
+        public DbSet<IngredientModel> Ingredients { get; set; }
+        public DbSet<RecipeIngredientModel> RecipeIngredients { get; set; }
+        public DbSet<InstructionModel> Instructions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+        }
     }
 }

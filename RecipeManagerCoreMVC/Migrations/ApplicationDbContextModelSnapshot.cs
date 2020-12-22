@@ -19,6 +19,62 @@ namespace RecipeManagerCoreMVC.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.IngredientModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Ingredient")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.InstructionModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Instruction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("Instructions");
+                });
+
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.RecipeIngredientModel", b =>
+                {
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IngredientQuantity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IngredientUnit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RecipeId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("RecipeIngredients");
+                });
+
             modelBuilder.Entity("RecipeManagerCoreMVC.Models.RecipeModel", b =>
                 {
                     b.Property<int>("Id")
@@ -45,6 +101,48 @@ namespace RecipeManagerCoreMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.InstructionModel", b =>
+                {
+                    b.HasOne("RecipeManagerCoreMVC.Models.RecipeModel", "RecipeModel")
+                        .WithMany("InstructionModels")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RecipeModel");
+                });
+
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.RecipeIngredientModel", b =>
+                {
+                    b.HasOne("RecipeManagerCoreMVC.Models.IngredientModel", "IngredientsModel")
+                        .WithMany("RecipeIngredientModels")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RecipeManagerCoreMVC.Models.RecipeModel", "RecipeModel")
+                        .WithMany("RecipeIngredientModels")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IngredientsModel");
+
+                    b.Navigation("RecipeModel");
+                });
+
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.IngredientModel", b =>
+                {
+                    b.Navigation("RecipeIngredientModels");
+                });
+
+            modelBuilder.Entity("RecipeManagerCoreMVC.Models.RecipeModel", b =>
+                {
+                    b.Navigation("InstructionModels");
+
+                    b.Navigation("RecipeIngredientModels");
                 });
 #pragma warning restore 612, 618
         }
