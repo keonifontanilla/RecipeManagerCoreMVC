@@ -32,6 +32,42 @@
         <label asp-for="InstructionModel.Instruction" class="col-sm-2 col-form-label"></label>
         <input asp-for="InstructionModel.Instruction" class="form-control col-sm-10" />
     </div>
+    <div>
+        <button id="addIngredientButton" type="button" class="btn btn-primary">Add</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Ingredient</th>
+                </tr>
+            </thead>
+            <tbody id="ingredientTBody">
+                <tr>
+                    <td>1</td>
+                    <td>oz</td>
+                    <td>water</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button id="addInstructionButton" type="button" class="btn btn-primary">Add</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Step</th>
+                    <th scope="col">Instruction</th>
+                </tr>
+            </thead>
+            <tbody id="instructionTBody">
+                <tr>
+                    <td>1</td>
+                    <td>Cook food.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a asp-action="Index" class="btn btn-primary">Back</a>
 </form>
@@ -40,4 +76,19 @@
     @{ // Client side validation.
         <partial name="_ValidationScriptsPartial" /> 
     }
+    
+    <script>
+        $(document).ready(function () {
+            $("#addIngredientButton").click(function () {
+                $("#ingredientTBody").append('<tr><td><input /></td><td><input /></td><td><input /></td></tr');
+            });
+        });
+
+        $(document).ready(function () {
+            $("#addInstructionButton").click(function () {
+                $("#instructionTBody").append('<tr><td><input /></td><td><input /></td></tr');
+            });
+        });
+    </script>   
+
 }
