@@ -28,10 +28,6 @@
         <label asp-for="RecipeIngredientModel.IngredientUnit" class="col-form-label col-sm-2"></label>
         <input asp-for="RecipeIngredientModel.IngredientUnit" class="form-control col-sm-2" />
     </div>
-    <div class="form-group row">
-        <label asp-for="InstructionModel.Instruction" class="col-sm-2 col-form-label"></label>
-        <input asp-for="InstructionModel.Instruction" class="form-control col-sm-10" />
-    </div>
     <div>
         <button id="addIngredientButton" type="button" class="btn btn-primary">Add</button>
         <table class="table table-bordered">
@@ -62,8 +58,8 @@
             </thead>
             <tbody id="instructionTBody">
                 <tr>
-                    <td>1</td>
-                    <td>Cook food.</td>
+                    <td>Example</td>
+                    <td>Cook for 30 mins.</td>
                 </tr>
             </tbody>
         </table>
@@ -85,8 +81,13 @@
         });
 
         $(document).ready(function () {
+            var index = 0;
+            var step = 1;
             $("#addInstructionButton").click(function () {
-                $("#instructionTBody").append('<tr><td><input /></td><td><input /></td></tr');
+                $("#instructionTBody")
+                    .append('<tr><td>' + step + '</td><td><input type="text" name="InstructionModels[' + index + '].Instruction" /></td></tr');
+                index++;
+                step++;
             });
         });
     </script>   

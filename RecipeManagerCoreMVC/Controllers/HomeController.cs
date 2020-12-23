@@ -42,11 +42,14 @@ namespace RecipeManagerCoreMVC.Controllers
             if (ModelState.IsValid)
             {
                 var recipeIngredient = homeCreateViewModel.RecipeIngredientModel;
-                var instruction = homeCreateViewModel.InstructionModel;
-                instruction.RecipeModel = recipeIngredient.RecipeModel;
 
                 _db.Add(recipeIngredient);
-                _db.Add(instruction);
+                foreach (var instruction in homeCreateViewModel.InstructionModels)
+                {
+                    instruction.RecipeModel = recipeIngredient.RecipeModel;
+                    _db.Add(instruction);
+                }
+
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
