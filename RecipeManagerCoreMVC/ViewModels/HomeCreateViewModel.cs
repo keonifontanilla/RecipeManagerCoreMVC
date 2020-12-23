@@ -8,7 +8,8 @@ namespace RecipeManagerCoreMVC.ViewModels
 {
     public class HomeCreateViewModel
     {
-        public RecipeIngredientModel RecipeIngredientModel { get; set; }
+        public RecipeModel RecipeModel { get; set; }
+        public List<RecipeIngredientModel> RecipeIngredientModels { get; set; }
         public List<IngredientModel> IngredientModels { get; set; }
         public List<InstructionModel> InstructionModels { get; set; }
     }

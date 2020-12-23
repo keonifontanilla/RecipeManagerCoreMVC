@@ -41,14 +41,29 @@ namespace RecipeManagerCoreMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var recipeIngredient = homeCreateViewModel.RecipeIngredientModel;
+                var recipeModel = homeCreateViewModel.RecipeModel;
+                var ingredientModels = homeCreateViewModel.IngredientModels;
+                var recipeIngredientsModels = homeCreateViewModel.RecipeIngredientModels;
+                var instructionModels = homeCreateViewModel.InstructionModels;
 
-                _db.Add(recipeIngredient);
-                foreach (var instruction in homeCreateViewModel.InstructionModels)
+                var index = 0;
+                foreach (var ingredientModel in ingredientModels)
                 {
-                    instruction.RecipeModel = recipeIngredient.RecipeModel;
-                    _db.Add(instruction);
+                    recipeIngredientsModels[index].IngredientsModel = ingredientModel;
+                    index++;
                 }
+
+                var newRecipe = new RecipeModel
+                {
+                    RecipeName = recipeModel.RecipeName,
+                    RecipeDescription = recipeModel.RecipeDescription,
+                    RecipeType = recipeModel.RecipeType,
+                    CreatedDate = recipeModel.CreatedDate,
+                    RecipeIngredientModels = recipeIngredientsModels,
+                    InstructionModels = instructionModels
+                };
+
+                _db.Add(newRecipe);
 
                 _db.SaveChanges();
                 return RedirectToAction("Index");

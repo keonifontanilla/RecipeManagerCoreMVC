@@ -5,28 +5,18 @@
 
 <form method="Post" asp-action="Create">
     <div class="form-group row">
-        <label asp-for="RecipeIngredientModel.RecipeModel.RecipeName" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeIngredientModel.RecipeModel.RecipeName" class="form-control col-sm-10" />
-        <span asp-validation-for="RecipeIngredientModel.RecipeModel.RecipeName" class="text-danger"></span>
+        <label asp-for="RecipeModel.RecipeName" class="col-sm-2 col-form-label"></label>
+        <input asp-for="RecipeModel.RecipeName" class="form-control col-sm-10" />
+        <span asp-validation-for="RecipeModel.RecipeName" class="text-danger"></span>
     </div>
     <div class="form-group row">
-        <label asp-for="RecipeIngredientModel.RecipeModel.RecipeDescription" class="col-sm-2 col-form-label"></label>
-        <textarea asp-for="RecipeIngredientModel.RecipeModel.RecipeDescription" class="form-control col-sm-10"></textarea>
+        <label asp-for="RecipeModel.RecipeDescription" class="col-sm-2 col-form-label"></label>
+        <textarea asp-for="RecipeModel.RecipeDescription" class="form-control col-sm-10"></textarea>
     </div>
     <div class="form-group row">
-        <label asp-for="RecipeIngredientModel.RecipeModel.RecipeType" class="col-sm-2 col-form-label"></label>
-        <select asp-for="RecipeIngredientModel.RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
+        <label asp-for="RecipeModel.RecipeType" class="col-sm-2 col-form-label"></label>
+        <select asp-for="RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
             .Where(x => x.Value != "0")' class="form-control col-sm-3"></select>
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeIngredientModel.IngredientsModel.Ingredient" class="form-control col-sm-10" />
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeIngredientModel.IngredientQuantity" class="col-form-label col-sm-2"></label>
-        <input asp-for="RecipeIngredientModel.IngredientQuantity" class="form-control col-sm-2 mr-5" />
-        <label asp-for="RecipeIngredientModel.IngredientUnit" class="col-form-label col-sm-2"></label>
-        <input asp-for="RecipeIngredientModel.IngredientUnit" class="form-control col-sm-2" />
     </div>
     <div>
         <button id="addIngredientButton" type="button" class="btn btn-primary">Add</button>
@@ -75,8 +65,13 @@
     
     <script>
         $(document).ready(function () {
+            var index = 0;
             $("#addIngredientButton").click(function () {
-                $("#ingredientTBody").append('<tr><td><input /></td><td><input /></td><td><input /></td></tr');
+                $("#ingredientTBody")
+                    .append('<tr><td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientQuantity" /></td>'
+                        + '<td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientUnit" /></td>'
+                        + '<td><input type="text" name="IngredientModels[' + index + '].Ingredient" /></td></tr');
+                index++;
             });
         });
 
