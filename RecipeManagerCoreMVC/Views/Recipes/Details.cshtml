@@ -1,0 +1,26 @@
+﻿@model RecipeManagerCoreMVC.Models.RecipeModel;
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<h4>@Model.RecipeName</h4>
+<h4>@Model.RecipeDescription</h4>
+<h4>@Model.RecipeType</h4>
+<div>
+    @foreach (var ingredients in Model.RecipeIngredientModels)
+    {
+        <div>
+            @ingredients.IngredientQuantity @ingredients.IngredientUnit @ingredients.IngredientsModel.Ingredient  
+        </div>
+    }
+</div>
+<div>
+    @foreach (var instructions in Model.InstructionModels)
+    {
+        <div>
+            @instructions.Instruction
+        </div>
+    }
+</div>
