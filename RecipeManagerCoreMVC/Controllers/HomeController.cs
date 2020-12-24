@@ -46,11 +46,14 @@ namespace RecipeManagerCoreMVC.Controllers
                 var recipeIngredientsModels = homeCreateViewModel.RecipeIngredientModels;
                 var instructionModels = homeCreateViewModel.InstructionModels;
 
-                var index = 0;
-                foreach (var ingredientModel in ingredientModels)
+                if (ingredientModels != null)
                 {
-                    recipeIngredientsModels[index].IngredientsModel = ingredientModel;
-                    index++;
+                    var index = 0;
+                    foreach (var ingredientModel in ingredientModels)
+                    {
+                        recipeIngredientsModels[index].IngredientsModel = ingredientModel;
+                        index++;
+                    }
                 }
 
                 var newRecipe = new RecipeModel
