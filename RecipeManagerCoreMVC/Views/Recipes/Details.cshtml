@@ -3,24 +3,46 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<h4>@Model.RecipeName</h4>
-<h4>@Model.RecipeDescription</h4>
-<h4>@Model.RecipeType</h4>
-<div>
-    @foreach (var ingredients in Model.RecipeIngredientModels)
-    {
-        <div>
-            @ingredients.IngredientQuantity @ingredients.IngredientUnit @ingredients.IngredientsModel.Ingredient  
+<div class="container">
+    <h1 class="h1 text-center mt-2">@Model.RecipeName</h1>
+    <div class="mx-auto my-3" style="width: 600px;">
+        <img src="~/Images/defaultImg.jpg" class="img-fluid" />
+    </div>
+    <div>
+        <p>@Model.RecipeDescription</p>
+    </div>
+    <div class="border mb-3">
+        <div class="row">
+            <div class="col-sm-8">
+                <h3 class="pl-1">Ingredients:</h3>
+                @foreach (var ingredients in Model.RecipeIngredientModels)
+                {
+                    <div>
+                        <ul>
+                            <li><p>@ingredients.IngredientQuantity @ingredients.IngredientUnit @ingredients.IngredientsModel.Ingredient</p></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+            <div class="border-left col-sm-4 pt-3">
+                <p><strong>Recipe Type:</strong> @Model.RecipeType</p>
+                <p><strong>Yield:</strong> 4 SERVINGS</p>
+                <p><strong>Prep:</strong> 15 MIN</p>
+                <p><strong>Cook:</strong> 55 MIN</p>
+                <p><strong>Total:</strong> 0 HOURS 10 MINS</p>
+            </div>
         </div>
-    }
-</div>
-<div>
-    @foreach (var instructions in Model.InstructionModels)
-    {
-        <div>
-            @instructions.Instruction
-        </div>
-    }
+    </div>
+    <div class="border">
+        <h3 class="pl-1">Instructions:</h3>
+        @{var counter = 1; }
+        @foreach (var instructions in Model.InstructionModels)
+        {
+            <div class="px-2">
+                <h4>Step @counter:</h4>
+                <p>@instructions.Instruction</p>
+            </div>
+            counter++;
+        }
+    </div>
 </div>
