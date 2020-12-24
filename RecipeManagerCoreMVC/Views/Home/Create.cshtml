@@ -18,7 +18,8 @@
         <select asp-for="RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
             .Where(x => x.Value != "0")' class="form-control col-sm-3"></select>
     </div>
-    <div>
+    <div class="border mb-3">
+        <h4>Ingredients</h4>
         <button id="addIngredientButton" type="button" class="btn btn-primary">Add</button>
         <table class="table table-bordered">
             <thead>
@@ -28,16 +29,11 @@
                     <th scope="col">Ingredient</th>
                 </tr>
             </thead>
-            <tbody id="ingredientTBody">
-                <tr>
-                    <td>1</td>
-                    <td>oz</td>
-                    <td>water</td>
-                </tr>
-            </tbody>
+            <tbody id="ingredientTBody"></tbody>
         </table>
     </div>
-    <div>
+    <div class="border">
+        <h4>Instructions</h4>
         <button id="addInstructionButton" type="button" class="btn btn-primary">Add</button>
         <table class="table table-bordered">
             <thead>
@@ -46,12 +42,7 @@
                     <th scope="col">Instruction</th>
                 </tr>
             </thead>
-            <tbody id="instructionTBody">
-                <tr>
-                    <td>Example</td>
-                    <td>Cook for 30 mins.</td>
-                </tr>
-            </tbody>
+            <tbody id="instructionTBody"></tbody>
         </table>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -66,23 +57,46 @@
     <script>
         $(document).ready(function () {
             var index = 0;
+            var count = 0;
             $("#addIngredientButton").click(function () {
                 $("#ingredientTBody")
                     .append('<tr><td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientQuantity" /></td>'
                         + '<td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientUnit" /></td>'
-                        + '<td><input type="text" name="IngredientModels[' + index + '].Ingredient" /></td></tr');
+                        + '<td><input type="text" name="IngredientModels[' + index + '].Ingredient" /></td>'
+                        + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
                 index++;
+            });
+            $("#ingredientTBody").on("click", ".btn", function () {
+                $(this).closest("tr").remove();
+                count = 0;
+                index--;
+                $("#ingredientTBody > tr").each(function () {
+                    $(this).find("input").each(function () {
+                        $(this).attr("name", $(this).attr("name").replace(/\[\d+\]/, "[" + count + "]"));
+                    });
+                    count++;
+                });
             });
         });
 
         $(document).ready(function () {
             var index = 0;
-            var step = 1;
             $("#addInstructionButton").click(function () {
                 $("#instructionTBody")
-                    .append('<tr><td>' + step + '</td><td><input type="text" name="InstructionModels[' + index + '].Instruction" /></td></tr');
+                    .append('<tr><td><input type="text" name="step[' + index + ']" /></td><td><input type="text" name="InstructionModels[' + index + '].Instruction" /></td>'
+                        + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
                 index++;
-                step++;
+            });
+            $("#instructionTBody").on("click", ".btn", function () {
+                $(this).closest("tr").remove();
+                count = 0;
+                index--;
+                $("#instructionTBody > tr").each(function () {
+                    $(this).find("input").each(function () {
+                        $(this).attr("name", $(this).attr("name").replace(/\[\d+\]/, "[" + count + "]"));
+                    });
+                    count++;
+                });
             });
         });
     </script>   
