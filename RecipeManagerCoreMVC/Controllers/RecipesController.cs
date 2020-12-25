@@ -47,41 +47,41 @@ namespace RecipeManagerCoreMVC.Controllers
             return View(recipe);
         }
 
-        //TODO - Handle adding new instructions or ingredients on update
+        //TODO - Fix adding new ingredients or instructions indexing
         [HttpPost]
         public IActionResult Edit(RecipeModel recipeModel)
         {
             if (ModelState.IsValid)
             {
-                var recipe = new RecipeModel
-                {
-                    Id = recipeModel.Id,
-                    RecipeName = recipeModel.RecipeName,
-                    RecipeDescription = recipeModel.RecipeDescription,
-                    RecipeType = recipeModel.RecipeType,
-                    InstructionModels = recipeModel.InstructionModels
-                };
-                _db.Recipes.Update(recipe);
+                //var recipe = new RecipeModel
+                //{
+                //    Id = recipeModel.Id,
+                //    RecipeName = recipeModel.RecipeName,
+                //    RecipeDescription = recipeModel.RecipeDescription,
+                //    RecipeType = recipeModel.RecipeType,
+                //    InstructionModels = recipeModel.InstructionModels
+                //};
+                //_db.Recipes.Update(recipe);
 
-                foreach (var recipeIngredientModel in recipeModel.RecipeIngredientModels)
-                {
-                    IngredientModel ingredientModel = _db.Ingredients.FirstOrDefault(x => x.Id == recipeIngredientModel.IngredientId);
-                    ingredientModel.Ingredient = recipeIngredientModel.IngredientsModel.Ingredient;
-                    RecipeIngredientModel recipeIngredient = _db.RecipeIngredients.FirstOrDefault(x => x.IngredientId == recipeIngredientModel.IngredientId);
-                    recipeIngredient.IngredientQuantity = recipeIngredientModel.IngredientQuantity;
-                    recipeIngredient.IngredientUnit = recipeIngredientModel.IngredientUnit;
+                //foreach (var recipeIngredientModel in recipeModel.RecipeIngredientModels)
+                //{
+                //    IngredientModel ingredientModel = _db.Ingredients.FirstOrDefault(x => x.Id == recipeIngredientModel.IngredientId);
+                //    ingredientModel.Ingredient = recipeIngredientModel.IngredientsModel.Ingredient;
+                //    RecipeIngredientModel recipeIngredient = _db.RecipeIngredients.FirstOrDefault(x => x.IngredientId == recipeIngredientModel.IngredientId);
+                //    recipeIngredient.IngredientQuantity = recipeIngredientModel.IngredientQuantity;
+                //    recipeIngredient.IngredientUnit = recipeIngredientModel.IngredientUnit;
 
-                    _db.Update(recipeIngredient);
-                    _db.Update(ingredientModel);
-                }
+                //    _db.Update(recipeIngredient);
+                //    _db.Update(ingredientModel);
+                //}
 
-                //RecipeModel recipe = GetRecipe(recipeModel.Id);
-                //recipe.RecipeName = recipeModel.RecipeName;
-                //recipe.RecipeDescription = recipeModel.RecipeDescription;
-                //recipe.RecipeType = recipeModel.RecipeType;
-                //recipe.RecipeIngredientModels = recipeModel.RecipeIngredientModels;
-                //recipe.InstructionModels = recipeModel.InstructionModels;
-                //_db.Update(recipe);
+                RecipeModel recipe = GetRecipe(recipeModel.Id);
+                recipe.RecipeName = recipeModel.RecipeName;
+                recipe.RecipeDescription = recipeModel.RecipeDescription;
+                recipe.RecipeType = recipeModel.RecipeType;
+                recipe.RecipeIngredientModels = recipeModel.RecipeIngredientModels;
+                recipe.InstructionModels = recipeModel.InstructionModels;
+                _db.Update(recipe);
 
                 _db.SaveChanges();
                 return RedirectToAction("Index");

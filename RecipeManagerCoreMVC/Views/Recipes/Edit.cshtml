@@ -86,7 +86,7 @@
         <partial name="_ValidationScriptsPartial" /> 
     }
     
-    <script>
+<script>
         $(document).ready(function () {
             var index = 0;
             var count = 0;
@@ -94,7 +94,7 @@
                 $("#ingredientTBody")
                     .append('<tr><td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientQuantity" /></td>'
                         + '<td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientUnit" /></td>'
-                        + '<td><input type="text" name="IngredientModels[' + index + '].Ingredient" /></td>'
+                        + '<td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientsModel.Ingredient" /></td>'
                         + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
                 index++;
             });
@@ -131,6 +131,6 @@
                 });
             });
         });
-    </script>   
+</script>   
 
 }
