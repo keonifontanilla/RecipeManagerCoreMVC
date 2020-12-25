@@ -30,50 +30,67 @@ namespace RecipeManagerCoreMVC.Controllers
             return View(recipes);
         }
 
-        [HttpGet]
-        public IActionResult Create()
+        public IActionResult Details(int? id)
         {
-            return View();
+            if (id == null || id == 0) return Error();
+            RecipeModel recipe = GetRecipe(id);
+
+            return View(recipe);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0) return Error();
+            RecipeModel recipe = GetRecipe(id);
+
+            return View(recipe);
+        }
+
+        //TODO - Handle adding new instructions or ingredients on update
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(HomeCreateViewModel homeCreateViewModel)
+        public IActionResult Edit(RecipeModel recipeModel)
         {
             if (ModelState.IsValid)
             {
-                var recipeModel = homeCreateViewModel.RecipeModel;
-                var ingredientModels = homeCreateViewModel.IngredientModels;
-                var recipeIngredientsModels = homeCreateViewModel.RecipeIngredientModels;
-                var instructionModels = homeCreateViewModel.InstructionModels;
-
-                var index = 0;
-                foreach (var ingredientModel in ingredientModels)
+                var recipe = new RecipeModel
                 {
-                    recipeIngredientsModels[index].IngredientsModel = ingredientModel;
-                    index++;
-                }
-
-                var newRecipe = new RecipeModel
-                {
+                    Id = recipeModel.Id,
                     RecipeName = recipeModel.RecipeName,
                     RecipeDescription = recipeModel.RecipeDescription,
                     RecipeType = recipeModel.RecipeType,
-                    CreatedDate = recipeModel.CreatedDate,
-                    RecipeIngredientModels = recipeIngredientsModels,
-                    InstructionModels = instructionModels
+                    InstructionModels = recipeModel.InstructionModels
                 };
+                _db.Recipes.Update(recipe);
 
-                _db.Add(newRecipe);
+                foreach (var recipeIngredientModel in recipeModel.RecipeIngredientModels)
+                {
+                    IngredientModel ingredientModel = _db.Ingredients.FirstOrDefault(x => x.Id == recipeIngredientModel.IngredientId);
+                    ingredientModel.Ingredient = recipeIngredientModel.IngredientsModel.Ingredient;
+                    RecipeIngredientModel recipeIngredient = _db.RecipeIngredients.FirstOrDefault(x => x.IngredientId == recipeIngredientModel.IngredientId);
+                    recipeIngredient.IngredientQuantity = recipeIngredientModel.IngredientQuantity;
+                    recipeIngredient.IngredientUnit = recipeIngredientModel.IngredientUnit;
+
+                    _db.Update(recipeIngredient);
+                    _db.Update(ingredientModel);
+                }
+
+                //RecipeModel recipe = GetRecipe(recipeModel.Id);
+                //recipe.RecipeName = recipeModel.RecipeName;
+                //recipe.RecipeDescription = recipeModel.RecipeDescription;
+                //recipe.RecipeType = recipeModel.RecipeType;
+                //recipe.RecipeIngredientModels = recipeModel.RecipeIngredientModels;
+                //recipe.InstructionModels = recipeModel.InstructionModels;
+                //_db.Update(recipe);
 
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-           return View();
+            return View(recipeModel);
         }
 
-        public IActionResult Details(int id)
+        private RecipeModel GetRecipe(int? id)
         {
             RecipeModel recipe = _db.Recipes
                 .Include(x => x.RecipeIngredientModels)
@@ -81,7 +98,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 .Include(x => x.InstructionModels)
                 .FirstOrDefault(x => x.Id == id);
 
-            return View(recipe);
+            return recipe;
         }
 
         public IActionResult Privacy()

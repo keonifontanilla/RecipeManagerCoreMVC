@@ -24,6 +24,9 @@
                             <p>@recipe.UpdatedDated</p>
                         </div>
                     </div>
+                    <div class="card-footer text-center">
+                        <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-primary">Edit</a>
+                    </div>
                 </div>
             </div>
         }
