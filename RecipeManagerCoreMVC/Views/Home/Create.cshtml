@@ -81,24 +81,31 @@
 
         $(document).ready(function () {
             var index = 0;
+            var step = 1;
             $("#addInstructionButton").click(function () {
                 $("#instructionTBody")
-                    .append('<tr><td><input type="text" name="step[' + index + ']" /></td><td><input type="text" name="InstructionModels[' + index + '].Instruction" /></td>'
+                    .append('<tr><td style="text-align: center"><strong>' + step + '</strong></td>'
+                        + '<td><input type="text" name="InstructionModels[' + index + '].Instruction" /></td>'
                         + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
                 index++;
+                step++;
             });
             $("#instructionTBody").on("click", ".btn", function () {
                 $(this).closest("tr").remove();
                 count = 0;
+                step = 1;
                 index--;
                 $("#instructionTBody > tr").each(function () {
                     $(this).find("input").each(function () {
                         $(this).attr("name", $(this).attr("name").replace(/\[\d+\]/, "[" + count + "]"));
                     });
+                    $(this).find("td:first-child").each(function () {
+                        $(this).html("<strong>" + step + "</strong>");
+                    });
                     count++;
+                    step++;
                 });
             });
         });
     </script>   
-
 }
