@@ -10,7 +10,7 @@
         {
             <div class="col-sm-4 mb-4">
                 <div class="card h-100">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" asp-route-name="@recipe.RecipeName">
                         <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
                     </a>
                     <div class="card-header">

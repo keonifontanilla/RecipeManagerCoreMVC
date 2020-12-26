@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using static RecipeManagerCoreMVC.Models.Enums;
 
 namespace RecipeManagerCoreMVC.Controllers
 {
@@ -23,13 +24,20 @@ namespace RecipeManagerCoreMVC.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(RecipeType? recipeType)
         {
             IEnumerable<RecipeModel> recipes = _db.Recipes;
+
+            if (recipeType != null && recipeType != RecipeType.All)
+            {
+                recipes = _db.Recipes.Where(x => x.RecipeType == recipeType);
+                return View(recipes);
+            }
 
             return View(recipes);
         }
 
+        [HttpGet("Recipes/Recipe/{id?}/{name?}")]
         public IActionResult Details(int? id)
         {
             if (id == null || id == 0) return Error();
@@ -47,7 +55,6 @@ namespace RecipeManagerCoreMVC.Controllers
             return View(recipe);
         }
 
-        //TODO - Fix adding new ingredients or instructions indexing
         [HttpPost]
         public IActionResult Edit(RecipeModel recipeModel)
         {
@@ -84,7 +91,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 _db.Update(recipe);
 
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = recipe.Id });
             }
 
             return View(recipeModel);

@@ -10,7 +10,9 @@
         {
             <div class="col-sm">
                 <div class="card">
-                    <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                    <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipe">
+                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                    </a>
                     <div class="card-footer">
                         <p>@recipe</p>
                     </div>
