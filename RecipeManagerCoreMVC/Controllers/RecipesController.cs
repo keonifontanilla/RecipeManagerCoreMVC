@@ -113,9 +113,18 @@ namespace RecipeManagerCoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int? id)
         {
-            RecipeModel recipeModel = _db.Recipes.Find(id);
+            RecipeModel recipeModel = _db.Recipes
+                .Include(x => x.RecipeIngredientModels)
+                .ThenInclude(x => x.IngredientsModel)
+                .FirstOrDefault(x => x.Id == id);
 
             if (recipeModel == null) return Error();
+
+            foreach (var recipeIngredientModels in recipeModel.RecipeIngredientModels)
+            {
+                _db.Remove(recipeIngredientModels.IngredientsModel);
+            }
+
             _db.Remove(recipeModel);
             _db.SaveChanges();
 
