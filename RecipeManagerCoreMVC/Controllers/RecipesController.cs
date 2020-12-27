@@ -56,6 +56,7 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(RecipeModel recipeModel)
         {
             if (ModelState.IsValid)
@@ -106,6 +107,19 @@ namespace RecipeManagerCoreMVC.Controllers
                 .FirstOrDefault(x => x.Id == id);
 
             return recipe;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int? id)
+        {
+            RecipeModel recipeModel = _db.Recipes.Find(id);
+
+            if (recipeModel == null) return Error();
+            _db.Remove(recipeModel);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

@@ -86,3 +86,7 @@ table td input {
     padding: 10px;
     box-sizing: border-box;
 }
+
+.details-btn-w {
+    width: 75px !important;
+}

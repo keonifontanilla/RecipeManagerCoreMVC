@@ -25,7 +25,13 @@
                         </div>
                     </div>
                     <div class="card-footer text-center">
-                        <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-primary">Edit</a>
+                        <div class="row justify-content-center">
+                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-primary mr-1 details-btn-w">Edit</a>
+                            <form method="post" asp-controller="Recipes" asp-action="Delete">
+                                <input name="Id" value="@recipe.Id" hidden />
+                                <button class="btn btn-danger ml-1 details-btn-w" type="submit">Delete</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
