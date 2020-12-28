@@ -82,6 +82,16 @@ namespace RecipeManagerCoreMVC.Controllers
                 //    _db.Update(recipeIngredient);
                 //    _db.Update(ingredientModel);
                 //}
+                
+                // Check for existing ingredient
+                if (recipeModel.RecipeIngredientModels != null)
+                {
+                    foreach (var recipeIngredientModel in recipeModel.RecipeIngredientModels)
+                    {
+                        IngredientModel existingIngredient = _db.Ingredients.FirstOrDefault(x => x.Ingredient == recipeIngredientModel.IngredientsModel.Ingredient);
+                        if (existingIngredient != null) recipeIngredientModel.IngredientsModel = existingIngredient;
+                    }
+                }
 
                 RecipeModel recipe = GetRecipe(recipeModel.Id);
                 recipe.RecipeName = recipeModel.RecipeName;
@@ -120,10 +130,11 @@ namespace RecipeManagerCoreMVC.Controllers
 
             if (recipeModel == null) return Error();
 
-            foreach (var recipeIngredientModels in recipeModel.RecipeIngredientModels)
-            {
-                _db.Remove(recipeIngredientModels.IngredientsModel);
-            }
+            //// Remove ingredients that belongs to the recipe
+            //foreach (var recipeIngredientModels in recipeModel.RecipeIngredientModels)
+            //{
+            //    _db.Remove(recipeIngredientModels.IngredientsModel);
+            //}
 
             _db.Remove(recipeModel);
             _db.SaveChanges();

@@ -51,7 +51,16 @@ namespace RecipeManagerCoreMVC.Controllers
                     var index = 0;
                     foreach (var ingredientModel in ingredientModels)
                     {
-                        recipeIngredientsModels[index].IngredientsModel = ingredientModel;
+                        // Check for existing ingredient
+                        IngredientModel existingIngredient =_db.Ingredients.FirstOrDefault(x => x.Ingredient == ingredientModel.Ingredient);
+                        if (existingIngredient != null)
+                        {
+                            recipeIngredientsModels[index].IngredientId = existingIngredient.Id;
+                        }
+                        else
+                        {
+                            recipeIngredientsModels[index].IngredientsModel = ingredientModel;
+                        }
                         index++;
                     }
                 }
@@ -67,7 +76,6 @@ namespace RecipeManagerCoreMVC.Controllers
                 };
 
                 _db.Add(newRecipe);
-
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
