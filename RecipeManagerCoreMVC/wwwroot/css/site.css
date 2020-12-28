@@ -60,6 +60,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
+  padding-top: 70px;
   margin-bottom: 60px;
 }
 .footer {
@@ -89,4 +90,26 @@ table td input {
 
 .details-btn-w {
     width: 75px !important;
+}
+
+.border-black-3 {
+    border-width: 3px !important;
+    border-color: black !important;
+}
+
+.recipeType-div
+{
+    padding: 10px 10px 0;
+    width: 200px;
+}
+
+.recipeType-bg-gold {
+    background-color: #ffd100;
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    position: relative;
+    top: -20px;
 }

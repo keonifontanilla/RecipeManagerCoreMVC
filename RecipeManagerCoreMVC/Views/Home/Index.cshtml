@@ -4,20 +4,24 @@
 }
 
 <div class="container">
-    <h4>Recipe Types</h4>
-    <div class="row mb-3">
-        @foreach (var recipe in Enum.GetValues(typeof(Enums.RecipeType)))
-        {
-            <div class="col-sm">
-                <div class="card">
-                    <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipe">
-                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
-                    </a>
-                    <div class="card-footer">
-                        <p>@recipe</p>
+    <div style="background-color: #202020;">
+        <div class="recipeType-div">
+            <h4 class="recipeType-bg-gold">Recipe Types</h4>
+        </div>
+        <div class="row mb-3">
+            @foreach (var recipe in Enum.GetValues(typeof(Enums.RecipeType)))
+            {
+                <div class="col-sm px-1 pb-3">
+                    <div class="card">
+                        <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipe">
+                            <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@recipe</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
