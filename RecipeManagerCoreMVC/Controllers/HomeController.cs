@@ -72,7 +72,8 @@ namespace RecipeManagerCoreMVC.Controllers
                     RecipeType = recipeModel.RecipeType,
                     CreatedDate = recipeModel.CreatedDate,
                     RecipeIngredientModels = recipeIngredientsModels,
-                    InstructionModels = instructionModels
+                    InstructionModels = instructionModels,
+                    RecipeInfoModel = recipeModel.RecipeInfoModel
                 };
 
                 _db.Add(newRecipe);

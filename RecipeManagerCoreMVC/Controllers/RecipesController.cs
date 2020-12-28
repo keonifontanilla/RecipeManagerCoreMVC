@@ -99,6 +99,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 recipe.RecipeType = recipeModel.RecipeType;
                 recipe.RecipeIngredientModels = recipeModel.RecipeIngredientModels;
                 recipe.InstructionModels = recipeModel.InstructionModels;
+                recipe.RecipeInfoModel = recipeModel.RecipeInfoModel;
                 _db.Update(recipe);
 
                 _db.SaveChanges();
@@ -114,6 +115,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 .Include(x => x.RecipeIngredientModels)
                 .ThenInclude(x => x.IngredientsModel)
                 .Include(x => x.InstructionModels)
+                .Include(x => x.RecipeInfoModel)
                 .FirstOrDefault(x => x.Id == id);
 
             return recipe;

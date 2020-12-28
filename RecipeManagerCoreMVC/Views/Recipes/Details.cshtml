@@ -26,10 +26,10 @@
             </div>
             <div class="border-left col-sm-4 pt-3">
                 <p><strong>Recipe Type:</strong> @Model.RecipeType</p>
-                <p><strong>Yield:</strong> 4 SERVINGS</p>
-                <p><strong>Prep:</strong> 15 MIN</p>
-                <p><strong>Cook:</strong> 55 MIN</p>
-                <p><strong>Total:</strong> 0 HOURS 10 MINS</p>
+                <p><strong>Yield:</strong> @if (Model.RecipeInfoModel != null) { @Model.RecipeInfoModel.Yield; }</p>
+                <p><strong>Prep:</strong> @if (Model.RecipeInfoModel != null) { @Model.RecipeInfoModel.PrepTime; }</p>
+                <p><strong>Cook:</strong> @if (Model.RecipeInfoModel != null) { @Model.RecipeInfoModel.CookTime; }</p>
+                <p><strong>Total:</strong> @if (Model.RecipeInfoModel != null) { @Model.RecipeInfoModel.TotalTime; }</p>
             </div>
         </div>
     </div>

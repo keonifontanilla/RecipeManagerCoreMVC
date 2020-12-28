@@ -16,7 +16,17 @@
     <div class="form-group row">
         <label asp-for="RecipeType" class="col-sm-2 col-form-label"></label>
         <select asp-for="RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
-            .Where(x => x.Value != "0")' class="form-control col-sm-3"></select>
+            .Where(x => x.Value != "0")' class="form-control col-sm-2"></select>
+        <label asp-for="RecipeInfoModel.Yield" class="col-sm-2 col-form-label pl-5"></label>
+        <input asp-for="RecipeInfoModel.Yield" class="form-control col-sm-2" />
+        <label asp-for="RecipeInfoModel.PrepTime" class="col-sm-2 col-form-label pl-5"></label>
+        <input asp-for="RecipeInfoModel.PrepTime" class="form-control col-sm-2" />
+    </div>
+    <div class="form-group row">
+        <label asp-for="RecipeInfoModel.CookTime" class="col-sm-2 col-form-label"></label>
+        <input asp-for="RecipeInfoModel.CookTime" class="form-control col-sm-2" />
+        <label asp-for="RecipeInfoModel.TotalTime" class="col-sm-2 col-form-label pl-5"></label>
+        <input asp-for="RecipeInfoModel.TotalTime" class="form-control col-sm-2" />
     </div>
     <div class="border mb-3">
         <h4>Ingredients</h4>
@@ -33,21 +43,21 @@
                 @{ var i = 0; }
                 @foreach (var recipeIngredients in Model.RecipeIngredientModels)
                 {
-                <tr>
-                    <td>
-                        <input asp-for="@recipeIngredients.IngredientId" name="RecipeIngredientModels[@i].IngredientId" hidden />
-                        <input asp-for="@recipeIngredients.IngredientQuantity" name="RecipeIngredientModels[@i].IngredientQuantity" />
-                    </td>
-                    <td>
-                        <input asp-for="@recipeIngredients.IngredientUnit" name="RecipeIngredientModels[@i].IngredientUnit" />
-                    </td>
-                    <td>
-                        <input asp-for="@recipeIngredients.IngredientsModel.Ingredient" name="RecipeIngredientModels[@i].IngredientsModel.Ingredient" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="@recipeIngredients.IngredientId" name="RecipeIngredientModels[@i].IngredientId" hidden />
+                            <input asp-for="@recipeIngredients.IngredientQuantity" name="RecipeIngredientModels[@i].IngredientQuantity" />
+                        </td>
+                        <td>
+                            <input asp-for="@recipeIngredients.IngredientUnit" name="RecipeIngredientModels[@i].IngredientUnit" />
+                        </td>
+                        <td>
+                            <input asp-for="@recipeIngredients.IngredientsModel.Ingredient" name="RecipeIngredientModels[@i].IngredientsModel.Ingredient" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
                     i++;
                 }
             </tbody>
@@ -64,10 +74,10 @@
                 </tr>
             </thead>
             <tbody id="instructionTBody">
-                @{ 
+                @{
                     var j = 0;
                     var step = 1;
-                } 
+                }
                 @foreach (var instructions in Model.InstructionModels)
                 {
                     <tr>
