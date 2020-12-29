@@ -9,15 +9,44 @@
             <h4 class="recipeType-bg-gold">Recipe Types</h4>
         </div>
         <div class="row">
-            @foreach (var recipe in Enum.GetValues(typeof(Enums.RecipeType)))
+            @foreach (var recipeType in Enum.GetValues(typeof(Enums.RecipeType)))
             {
-                <div class="col-sm px-1 pb-3">
-                    <div class="card">
-                        <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipe">
+                if (recipeType.ToString() != "All")
+                {
+                    <div class="col-sm px-1 pb-3">
+                        <div class="card rounded-0">
+                            <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipeType">
+                                <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                            </a>
+                            <div id="rt-card-body" class="card-body">
+                                <h5 class="text-center" style="margin-top: 8px;">@recipeType</h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="bg-black mt-5">
+        <div class="recipeType-div">
+            <h4 class="recipeType-bg-gold">Featured</h4>
+        </div>
+        <div class="row">
+            @foreach (var recipe in Model)
+            {
+                <div class="col-sm-4 px-1 pb-3">
+                    <div class="card h-100 rounded-0">
+                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" asp-route-name="@recipe.RecipeName">
                             <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
                         </a>
-                        <div id="rt-card-body" class="card-body">
-                            <h5 class="text-center" style="margin-top: 8px;">@recipe</h5>
+                        <div class="card-header">
+                            <h5 class="text-center">@recipe.RecipeName</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="text-truncate">@recipe.RecipeDescription</p>
+                                <p>@recipe.RecipeType</p>
+                            </div>
                         </div>
                     </div>
                 </div>
