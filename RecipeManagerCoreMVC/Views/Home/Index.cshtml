@@ -4,11 +4,11 @@
 }
 
 <div class="container">
-    <div style="background-color: #202020;">
+    <div class="bg-black">
         <div class="recipeType-div">
             <h4 class="recipeType-bg-gold">Recipe Types</h4>
         </div>
-        <div class="row mb-3">
+        <div class="row">
             @foreach (var recipe in Enum.GetValues(typeof(Enums.RecipeType)))
             {
                 <div class="col-sm px-1 pb-3">
@@ -16,8 +16,8 @@
                         <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipe">
                             <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
                         </a>
-                        <div class="card-body text-center">
-                            <h5 class="card-title">@recipe</h5>
+                        <div id="rt-card-body" class="card-body">
+                            <h5 class="text-center" style="margin-top: 8px;">@recipe</h5>
                         </div>
                     </div>
                 </div>

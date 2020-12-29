@@ -113,3 +113,11 @@ table td input {
     position: relative;
     top: -20px;
 }
+
+.bg-black {
+    background-color: #202020;
+}
+
+#rt-card-body.card-body {
+    padding: .5rem;
+}
