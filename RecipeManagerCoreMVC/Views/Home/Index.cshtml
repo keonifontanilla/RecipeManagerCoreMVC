@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RecipeManagerCoreMVC.Models.RecipeModel>
+﻿@model List<RecipeManagerCoreMVC.Models.RecipeModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -27,30 +27,48 @@
             }
         </div>
     </div>
-    <div class="bg-black mt-5">
+    <div class="bg-black mt-5 div-height">
         <div class="recipeType-div">
             <h4 class="recipeType-bg-gold">Featured</h4>
         </div>
-        <div class="row">
-            @foreach (var recipe in Model)
-            {
-                <div class="col-sm-4 px-1 pb-3">
-                    <div class="card h-100 rounded-0">
-                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" asp-route-name="@recipe.RecipeName">
-                            <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
-                        </a>
-                        <div class="card-header">
-                            <h5 class="text-center">@recipe.RecipeName</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <p class="text-truncate">@recipe.RecipeDescription</p>
-                                <p>@recipe.RecipeType</p>
-                            </div>
+        <div class="row flex-column div-height">
+            <div class="col-sm-12 px-1 pb-3" style="width: 40.5rem;">
+                <div class="card rounded-0">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[0].Id" asp-route-name="@Model[0].RecipeName">
+                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                    </a>
+                    <div class="card-header text-center">
+                        <h5>@Model[0].RecipeName</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p class="text-truncate">@Model[0].RecipeDescription</p>
+                            <p>@Model[0].RecipeType</p>
+                            <p>Author: Name</p>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+            <div class="col-auto mb-1 ml-5 random-card" style="width: 25rem;">
+                <div class="card rounded-0">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[1].Id" asp-route-name="@Model[1].RecipeName">
+                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                    </a>
+                    <div class="card-header text-center">
+                        <h5>@Model[1].RecipeName</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto mt-4 ml-5 pt-2 random-card" style="width: 25rem;">
+                <div class="card rounded-0">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[2].Id" asp-route-name="@Model[2].RecipeName">
+                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                    </a>
+                    <div class="card-header text-center">
+                        <h5>@Model[2].RecipeName</h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

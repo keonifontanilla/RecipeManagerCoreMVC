@@ -24,7 +24,7 @@ namespace RecipeManagerCoreMVC.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<RecipeModel> recipes = _db.Recipes.OrderBy(x => Guid.NewGuid()).Take(3);
+            List<RecipeModel> recipes = _db.Recipes.OrderBy(x => Guid.NewGuid()).Take(3).ToList();
 
             return View(recipes);
         }

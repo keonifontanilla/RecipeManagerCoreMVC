@@ -121,3 +121,11 @@ table td input {
 #rt-card-body.card-body {
     padding: .5rem;
 }
+
+.div-height {
+    height: 700px;
+}
+
+.random-card.ml-5 {
+    margin-left: 4.5rem !important;
+}
