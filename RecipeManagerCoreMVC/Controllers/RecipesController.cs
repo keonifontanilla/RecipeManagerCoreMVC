@@ -60,29 +60,7 @@ namespace RecipeManagerCoreMVC.Controllers
         public IActionResult Edit(RecipeModel recipeModel)
         {
             if (ModelState.IsValid)
-            {
-                //var recipe = new RecipeModel
-                //{
-                //    Id = recipeModel.Id,
-                //    RecipeName = recipeModel.RecipeName,
-                //    RecipeDescription = recipeModel.RecipeDescription,
-                //    RecipeType = recipeModel.RecipeType,
-                //    InstructionModels = recipeModel.InstructionModels
-                //};
-                //_db.Recipes.Update(recipe);
-
-                //foreach (var recipeIngredientModel in recipeModel.RecipeIngredientModels)
-                //{
-                //    IngredientModel ingredientModel = _db.Ingredients.FirstOrDefault(x => x.Id == recipeIngredientModel.IngredientId);
-                //    ingredientModel.Ingredient = recipeIngredientModel.IngredientsModel.Ingredient;
-                //    RecipeIngredientModel recipeIngredient = _db.RecipeIngredients.FirstOrDefault(x => x.IngredientId == recipeIngredientModel.IngredientId);
-                //    recipeIngredient.IngredientQuantity = recipeIngredientModel.IngredientQuantity;
-                //    recipeIngredient.IngredientUnit = recipeIngredientModel.IngredientUnit;
-
-                //    _db.Update(recipeIngredient);
-                //    _db.Update(ingredientModel);
-                //}
-                
+            {                
                 // Check for existing ingredient
                 if (recipeModel.RecipeIngredientModels != null)
                 {
@@ -142,6 +120,13 @@ namespace RecipeManagerCoreMVC.Controllers
             _db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Search(string name)
+        {
+            IEnumerable<RecipeModel> recipes = _db.Recipes.Where(x => x.RecipeName.Contains(name));
+            return View(recipes);
         }
 
         public IActionResult Privacy()

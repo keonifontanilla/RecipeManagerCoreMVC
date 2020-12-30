@@ -28,8 +28,8 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Create</a>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2 border-black-3" type="search" placeholder="Search" aria-label="Search" />
+                    <form method="get" class="form-inline my-2 my-lg-0" asp-controller="Recipes" asp-action="Search">
+                        <input class="form-control mr-sm-2 border-black-3" name="name" type="search" placeholder="Search" aria-label="Search" />
                         <button class="btn btn-sm btn-outline-dark my-2 my-sm-0 border-black-3" type="submit">Search</button>
                     </form>
                 </div>
