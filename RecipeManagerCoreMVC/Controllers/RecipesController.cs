@@ -26,11 +26,11 @@ namespace RecipeManagerCoreMVC.Controllers
 
         public IActionResult Index(RecipeType? recipeType)
         {
-            IEnumerable<RecipeModel> recipes = _db.Recipes;
+            IEnumerable<RecipeModel> recipes = _db.Recipes.Include(x => x.RecipeInfoModel);
 
             if (recipeType != null && recipeType != RecipeType.All)
             {
-                recipes = _db.Recipes.Where(x => x.RecipeType == recipeType);
+                recipes = _db.Recipes.Where(x => x.RecipeType == recipeType).Include(x => x.RecipeInfoModel);
                 return View(recipes);
             }
 
@@ -125,7 +125,9 @@ namespace RecipeManagerCoreMVC.Controllers
         [HttpGet]
         public IActionResult Search(string name)
         {
-            IEnumerable<RecipeModel> recipes = _db.Recipes.Where(x => x.RecipeName.Contains(name));
+            IEnumerable<RecipeModel> recipes = _db.Recipes
+                .Where(x => x.RecipeName.Contains(name))
+                .Include(x => x.RecipeInfoModel);
             return View(recipes);
         }
 

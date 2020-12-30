@@ -1,4 +1,5 @@
-﻿using RecipeManagerCoreMVC.Models;
+﻿using Microsoft.AspNetCore.Http;
+using RecipeManagerCoreMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace RecipeManagerCoreMVC.ViewModels
         public List<RecipeIngredientModel> RecipeIngredientModels { get; set; }
         public List<IngredientModel> IngredientModels { get; set; }
         public List<InstructionModel> InstructionModels { get; set; }
+        public IFormFile Photo { get; set; }
     }
 }

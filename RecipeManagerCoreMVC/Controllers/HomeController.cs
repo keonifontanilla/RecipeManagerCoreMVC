@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RecipeManagerCoreMVC.Data;
 using RecipeManagerCoreMVC.Models;
@@ -6,6 +7,7 @@ using RecipeManagerCoreMVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,11 +17,13 @@ namespace RecipeManagerCoreMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hostingEnvironment)
         {
             _logger = logger;
             _db = db;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult Index()
@@ -63,6 +67,16 @@ namespace RecipeManagerCoreMVC.Controllers
                         }
                         index++;
                     }
+                }
+
+                string FileName = null;
+                if (homeCreateViewModel.Photo != null)
+                {
+                    var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                    FileName = $"{Guid.NewGuid()}_{homeCreateViewModel.Photo.FileName}";
+                    var path = Path.Combine(imageFolder, FileName);
+                    homeCreateViewModel.Photo.CopyTo(new FileStream(path, FileMode.Create));
+                    recipeModel.RecipeInfoModel.PhotoPath = FileName; 
                 }
 
                 var newRecipe = new RecipeModel

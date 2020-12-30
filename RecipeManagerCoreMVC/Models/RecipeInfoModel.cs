@@ -18,6 +18,7 @@ namespace RecipeManagerCoreMVC.Models
         public string CookTime { get; set; }
         [DisplayName("Total Time")]
         public string TotalTime { get; set; }
+        public string PhotoPath { get; set; }
         public int RecipeId { get; set; }
         public RecipeModel RecipeModel { get; set; }
     }

@@ -1,12 +1,13 @@
 ﻿@model RecipeManagerCoreMVC.Models.RecipeModel;
 @{
     ViewData["Title"] = "Details";
+    var photoPath = "~/Images/" + (Model.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
 }
 
 <div class="container">
     <h1 class="h1 text-center mt-2">@Model.RecipeName</h1>
     <div class="mx-auto my-3" style="width: 600px;">
-        <img src="~/Images/defaultImg.jpg" class="img-fluid" />
+        <img src=@photoPath asp-append-version="true" class="img-fluid" />
     </div>
     <div>
         <p>@Model.RecipeDescription</p>
