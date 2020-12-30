@@ -29,10 +29,10 @@
         <input asp-for="RecipeInfoModel.TotalTime" class="form-control col-sm-2" />
     </div>
     <div class="border mb-3">
-        <h4>Ingredients</h4>
-        <button id="addIngredientButton" type="button" class="btn btn-primary">Add</button>
+        <h4 class="pl-2">Ingredients</h4>
+        <button id="addIngredientButton" type="button" class="btn btn-sm btn-outline-dark border-black-3 mt-1 ml-2">Add</button>
         <table class="table table-bordered">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col" style="width: 10%;">Quantity</th>
                     <th scope="col" style="width: 10%;">Unit</th>
@@ -64,10 +64,10 @@
         </table>
     </div>
     <div class="border">
-        <h4>Instructions</h4>
-        <button id="addInstructionButton" type="button" class="btn btn-primary">Add</button>
+        <h4 class="pl-2">Instructions</h4>
+        <button id="addInstructionButton" type="button" class="btn btn-sm btn-outline-dark border-black-3 mt-1 ml-2">Add</button>
         <table class="table table-bordered">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col" style="width: 10%;">Step</th>
                     <th scope="col" style="width: 90%;">Instruction</th>
@@ -91,8 +91,8 @@
             </tbody>
         </table>
     </div>
-    <button type="submit" class="btn btn-primary">Update</button>
-    <a asp-controller="Recipes" asp-action="Index" class="btn btn-primary">Back</a>
+    <button type="submit" class="btn btn-sm btn-outline-dark border-black-3 mt-1">Update</button>
+    <a asp-controller="Recipes" asp-action="Index" class="btn btn-sm btn-outline-dark border-black-3 mt-1">Back</a>
 </form>
 
 @section Scripts{
