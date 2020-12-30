@@ -129,3 +129,12 @@ table td input {
 .random-card.ml-5 {
     margin-left: 4.5rem !important;
 }
+
+.recipeType-card {
+    height: 200px;
+    width: auto;
+}
+
+.embed-responsive .card-img-top {
+    object-fit: cover;
+}

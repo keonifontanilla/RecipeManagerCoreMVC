@@ -1,6 +1,7 @@
 ﻿@model List<RecipeManagerCoreMVC.Models.RecipeModel>
 @{
     ViewData["Title"] = "Home Page";
+    var typePhotos = new[] {"breakfastImg.jpg", "mainImg.jpg", "sideImg.jpg", "dessertImg.jpg", "drinkImg.jpg"};
 }
 
 <div class="container">
@@ -9,20 +10,24 @@
             <h4 class="recipeType-bg-gold">Recipe Types</h4>
         </div>
         <div class="row">
+            @{int i = 0; }    
             @foreach (var recipeType in Enum.GetValues(typeof(Enums.RecipeType)))
             {
                 if (recipeType.ToString() != "All")
                 {
                     <div class="col-sm px-1 pb-3">
-                        <div class="card rounded-0">
-                            <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipeType">
-                                <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
-                            </a>
+                        <div class="card rounded-0 recipeType-card">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <a asp-controller="Recipes" asp-action="Index" asp-route-recipeType="@recipeType">
+                                    <img src="~/Images/@typePhotos[i]" asp-append-version="true" class="card-img-top embed-responsive-item" />
+                                </a>
+                            </div>
                             <div id="rt-card-body" class="card-body">
                                 <h5 class="text-center" style="margin-top: 8px;">@recipeType</h5>
                             </div>
                         </div>
                     </div>
+                    i++;
                 }
             }
         </div>
