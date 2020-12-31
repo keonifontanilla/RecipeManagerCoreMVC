@@ -133,10 +133,7 @@ namespace RecipeManagerCoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int? id)
         {
-            RecipeModel recipeModel = _db.Recipes
-                .Include(x => x.RecipeIngredientModels)
-                .ThenInclude(x => x.IngredientsModel)
-                .FirstOrDefault(x => x.Id == id);
+            RecipeModel recipeModel = GetRecipe(id);
 
             if (recipeModel == null) return Error();
 
@@ -145,6 +142,13 @@ namespace RecipeManagerCoreMVC.Controllers
             //{
             //    _db.Remove(recipeIngredientModels.IngredientsModel);
             //}
+
+            if (recipeModel.RecipeInfoModel != null && recipeModel.RecipeInfoModel.PhotoPath != null)
+            {
+                var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images",
+                    recipeModel.RecipeInfoModel.PhotoPath);
+                System.IO.File.Delete(oldPhotoPath);
+            }
 
             _db.Remove(recipeModel);
             _db.SaveChanges();
