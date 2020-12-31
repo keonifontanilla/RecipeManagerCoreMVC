@@ -93,9 +93,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 {
                     if (recipeModel.RecipeInfoModel.PhotoPath != null)
                     {
-                        var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images",
-                            recipeModel.RecipeInfoModel.PhotoPath);
-                        System.IO.File.Delete(oldPhotoPath);
+                        DeleteOldPhotoPath(recipeModel);
                     }
 
                     var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
@@ -115,6 +113,13 @@ namespace RecipeManagerCoreMVC.Controllers
             }
 
             return View(recipesEditViewModel.RecipeModel);
+        }
+
+        private void DeleteOldPhotoPath(RecipeModel recipeModel)
+        {
+            var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images",
+                recipeModel.RecipeInfoModel.PhotoPath);
+            System.IO.File.Delete(oldPhotoPath);
         }
 
         private RecipeModel GetRecipe(int? id)
@@ -145,9 +150,7 @@ namespace RecipeManagerCoreMVC.Controllers
 
             if (recipeModel.RecipeInfoModel != null && recipeModel.RecipeInfoModel.PhotoPath != null)
             {
-                var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images",
-                    recipeModel.RecipeInfoModel.PhotoPath);
-                System.IO.File.Delete(oldPhotoPath);
+                DeleteOldPhotoPath(recipeModel);
             }
 
             _db.Remove(recipeModel);
