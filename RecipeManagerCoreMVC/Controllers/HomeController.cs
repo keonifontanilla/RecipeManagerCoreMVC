@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeManagerCoreMVC.Data;
 using RecipeManagerCoreMVC.Models;
@@ -28,7 +29,10 @@ namespace RecipeManagerCoreMVC.Controllers
 
         public IActionResult Index()
         {
-            List<RecipeModel> recipes = _db.Recipes.OrderBy(x => Guid.NewGuid()).Take(3).ToList();
+            List<RecipeModel> recipes = _db.Recipes
+                .OrderBy(x => Guid.NewGuid())
+                .Include(x => x.RecipeInfoModel)
+                .Take(3).ToList();
 
             return View(recipes);
         }

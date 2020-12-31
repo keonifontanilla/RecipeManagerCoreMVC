@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
     var typePhotos = new[] {"breakfastImg.jpg", "mainImg.jpg", "sideImg.jpg", "dessertImg.jpg", "drinkImg.jpg"};
+    var featuredPhoto1 = "~/Images/" + (Model[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
+    var featuredPhoto2 = "~/Images/" + (Model[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
+    var featuredPhoto3 = "~/Images/" + (Model[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
 }
 
 <div class="container">
@@ -40,7 +43,7 @@
             <div class="col-sm-12 px-1 pb-3" style="width: 40.5rem;">
                 <div class="card rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[0].Id" asp-route-name="@Model[0].RecipeName">
-                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                        <img src=@featuredPhoto1 asp-append-version="true" class="card-top img-fluid" />
                     </a>
                     <div class="card-header text-center">
                         <h5>@Model[0].RecipeName</h5>
@@ -57,7 +60,7 @@
             <div class="col-auto mb-1 ml-5 random-card" style="width: 25rem;">
                 <div class="card rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[1].Id" asp-route-name="@Model[1].RecipeName">
-                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                        <img src=@featuredPhoto2 asp-append-version="true" class="card-top img-fluid" />
                     </a>
                     <div class="card-header text-center">
                         <h5>@Model[1].RecipeName</h5>
@@ -67,7 +70,7 @@
             <div class="col-auto mt-4 ml-5 pt-2 random-card" style="width: 25rem;">
                 <div class="card rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[2].Id" asp-route-name="@Model[2].RecipeName">
-                        <img src="~/Images/defaultImg.jpg" class="card-top img-fluid" />
+                        <img src=@featuredPhoto3 asp-append-version="true" class="card-top img-fluid" />
                     </a>
                     <div class="card-header text-center">
                         <h5>@Model[2].RecipeName</h5>
