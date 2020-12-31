@@ -17,7 +17,7 @@ namespace RecipeManagerCoreMVC.Models
         public string RecipeName { get; set; }
         [DisplayName("Recipe Description")]
         public string RecipeDescription { get; set; }
-        [DisplayName("Recipe Type")]
+        [DisplayName("Type")]
         public RecipeType RecipeType { get; set; }
         [DisplayName("Created Date")]
         public DateTime? CreatedDate { get; set; } = DateTime.Now;

@@ -12,11 +12,11 @@ namespace RecipeManagerCoreMVC.Models
         [Key]
         public int Id { get; set; }
         public string Yield { get; set; }
-        [DisplayName("Prep Time")]
+        [DisplayName("Prep")]
         public string PrepTime { get; set; }
-        [DisplayName("Cook Time")]
+        [DisplayName("Cook")]
         public string CookTime { get; set; }
-        [DisplayName("Total Time")]
+        [DisplayName("Total")]
         public string TotalTime { get; set; }
         public string PhotoPath { get; set; }
         public int RecipeId { get; set; }

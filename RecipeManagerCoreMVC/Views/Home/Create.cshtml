@@ -5,37 +5,49 @@
 
 <form enctype="multipart/form-data" method="Post" asp-action="Create">
     <div class="form-group row">
-        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <div class="custom-file">
-                <input asp-for="Photo" class="form-control custom-file-input" />
-                <label class="custom-file-label">Choose File...</label>
+        <div class="col-sm-4">
+            <div class="row">
+                <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="border mb-1 d-flex flex-column" style="height: 230px;">
+                        <div class="container text-center my-auto">Image</div>
+                        <img asp-append-version="true" id="img-preview" src="#" style="height: 230px;" hidden />
+                    </div>
+                    <div class="custom-file">
+                        <input asp-for="Photo" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Choose File...</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <label asp-for="RecipeModel.RecipeType" class="col-sm-2 col-form-label"></label>
+                <select asp-for="RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
+                    .Where(x => x.Value != "0")' class="col-sm-4 form-control"></select>
+                <label asp-for="RecipeModel.RecipeInfoModel.Yield" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.Yield" class="col-sm-4 form-control" placeholder="# of Servings" />
+            </div>
+            <div class="row mt-2">
+                <label asp-for="RecipeModel.RecipeInfoModel.PrepTime" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.PrepTime" class="form-control col-sm-4" placeholder="## MIN" />
+                <label asp-for="RecipeModel.RecipeInfoModel.CookTime" class="col-sm-2 col-form-label" ></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.CookTime" class="form-control col-sm-4" placeholder="## MIN" />
+            </div>
+            <div class="row mt-2">
+                <label asp-for="RecipeModel.RecipeInfoModel.TotalTime" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.TotalTime" class="form-control col-sm-4" placeholder="## MIN" />
             </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeModel.RecipeName" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeModel.RecipeName" class="form-control col-sm-10" />
-        <span asp-validation-for="RecipeModel.RecipeName" class="text-danger"></span>
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeModel.RecipeDescription" class="col-sm-2 col-form-label"></label>
-        <textarea asp-for="RecipeModel.RecipeDescription" class="form-control col-sm-10"></textarea>
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeModel.RecipeType" class="col-sm-2 col-form-label"></label>
-        <select asp-for="RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
-            .Where(x => x.Value != "0")' class="form-control col-sm-2"></select>
-        <label asp-for="RecipeModel.RecipeInfoModel.Yield" class="col-sm-2 col-form-label pl-5"></label>
-        <input asp-for="RecipeModel.RecipeInfoModel.Yield" class="form-control col-sm-2" />
-        <label asp-for="RecipeModel.RecipeInfoModel.PrepTime" class="col-sm-2 col-form-label pl-5"></label>
-        <input asp-for="RecipeModel.RecipeInfoModel.PrepTime" class="form-control col-sm-2" />
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeModel.RecipeInfoModel.CookTime" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeModel.RecipeInfoModel.CookTime" class="form-control col-sm-2" />
-        <label asp-for="RecipeModel.RecipeInfoModel.TotalTime" class="col-sm-2 col-form-label pl-5"></label>
-        <input asp-for="RecipeModel.RecipeInfoModel.TotalTime" class="form-control col-sm-2" />
+        <div class="col-sm-8">
+            <div class="form-group row">
+                <label asp-for="RecipeModel.RecipeName" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeName" class="form-control col-sm-10" />
+                <span asp-validation-for="RecipeModel.RecipeName" class="text-danger"></span>
+            </div>
+            <div class="form-group row" style="height: 88%">
+                <label asp-for="RecipeModel.RecipeDescription" class="col-sm-2 col-form-label"></label>
+                <textarea asp-for="RecipeModel.RecipeDescription" class="form-control col-sm-10"></textarea>
+            </div>
+        </div>
     </div>
     <div class="border mb-3">
         <h4 class="pl-2">Ingredients</h4>
@@ -129,6 +141,8 @@
             $(".custom-file-input").on("change", function () {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).next(".custom-file-label").html(fileName);
+                $("#img-preview").siblings()[0].hidden = true;
+                $("#img-preview").attr('src', URL.createObjectURL(event.target.files[0])).removeAttr("hidden");
             });
         });
     </script>   
