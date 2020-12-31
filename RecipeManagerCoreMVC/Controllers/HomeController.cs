@@ -75,7 +75,10 @@ namespace RecipeManagerCoreMVC.Controllers
                     var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
                     FileName = $"{Guid.NewGuid()}_{homeCreateViewModel.Photo.FileName}";
                     var path = Path.Combine(imageFolder, FileName);
-                    homeCreateViewModel.Photo.CopyTo(new FileStream(path, FileMode.Create));
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        homeCreateViewModel.Photo.CopyTo(fileStream);
+                    }
                     recipeModel.RecipeInfoModel.PhotoPath = FileName; 
                 }
 

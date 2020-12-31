@@ -1,32 +1,55 @@
-﻿@model RecipeManagerCoreMVC.Models.RecipeModel
+﻿@model RecipeManagerCoreMVC.ViewModels.RecipesEditViewModel
 @{
     ViewData["Title"] = "Edit";
+    var photoPath = "~/Images/" + (Model.RecipeModel.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
 }
 
-<form method="Post" asp-controller="Recipes" asp-action="Edit">
+<form enctype="multipart/form-data" method="Post" asp-controller="Recipes" asp-action="Edit">
+    <input asp-for="RecipeModel.Id" hidden/>
+    <input asp-for="RecipeModel.RecipeInfoModel.PhotoPath" hidden/>
     <div class="form-group row">
-        <label asp-for="RecipeName" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeName" class="form-control col-sm-10" />
-        <span asp-validation-for="RecipeName" class="text-danger"></span>
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeDescription" class="col-sm-2 col-form-label"></label>
-        <textarea asp-for="RecipeDescription" class="form-control col-sm-10"></textarea>
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeType" class="col-sm-2 col-form-label"></label>
-        <select asp-for="RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
-            .Where(x => x.Value != "0")' class="form-control col-sm-2"></select>
-        <label asp-for="RecipeInfoModel.Yield" class="col-sm-2 col-form-label pl-5"></label>
-        <input asp-for="RecipeInfoModel.Yield" class="form-control col-sm-2" />
-        <label asp-for="RecipeInfoModel.PrepTime" class="col-sm-2 col-form-label pl-5"></label>
-        <input asp-for="RecipeInfoModel.PrepTime" class="form-control col-sm-2" />
-    </div>
-    <div class="form-group row">
-        <label asp-for="RecipeInfoModel.CookTime" class="col-sm-2 col-form-label"></label>
-        <input asp-for="RecipeInfoModel.CookTime" class="form-control col-sm-2" />
-        <label asp-for="RecipeInfoModel.TotalTime" class="col-sm-2 col-form-label pl-5"></label>
-        <input asp-for="RecipeInfoModel.TotalTime" class="form-control col-sm-2" />
+        <div class="col-sm-4">
+            <div class="row">
+                <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="border mb-1 d-flex flex-column" style="height: 230px;">
+                        <img asp-append-version="true" id="img-preview" src=@photoPath style="height: 230px;" />
+                    </div>
+                    <div class="custom-file">
+                        <input asp-for="Photo" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Choose File...</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <label asp-for="RecipeModel.RecipeType" class="col-sm-2 col-form-label"></label>
+                <select asp-for="RecipeModel.RecipeType" asp-items='Html.GetEnumSelectList<Enums.RecipeType>()
+                    .Where(x => x.Value != "0")' class="col-sm-4 form-control"></select>
+                <label asp-for="RecipeModel.RecipeInfoModel.Yield" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.Yield" class="col-sm-4 form-control" placeholder="# of Servings" />
+            </div>
+            <div class="row mt-2">
+                <label asp-for="RecipeModel.RecipeInfoModel.PrepTime" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.PrepTime" class="form-control col-sm-4" placeholder="## MIN" />
+                <label asp-for="RecipeModel.RecipeInfoModel.CookTime" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.CookTime" class="form-control col-sm-4" placeholder="## MIN" />
+            </div>
+            <div class="row mt-2">
+                <label asp-for="RecipeModel.RecipeInfoModel.TotalTime" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeInfoModel.TotalTime" class="form-control col-sm-4" placeholder="## MIN" />
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group row">
+                <label asp-for="RecipeModel.RecipeName" class="col-sm-2 col-form-label"></label>
+                <input asp-for="RecipeModel.RecipeName" class="form-control col-sm-10" />
+                <span asp-validation-for="RecipeModel.RecipeName" class="text-danger"></span>
+            </div>
+            <div class="form-group row" style="height: 88%">
+                <label asp-for="RecipeModel.RecipeDescription" class="col-sm-2 col-form-label"></label>
+                <textarea asp-for="RecipeModel.RecipeDescription" class="form-control col-sm-10"></textarea>
+            </div>
+        </div>
     </div>
     <div class="border mb-3">
         <h4 class="pl-2">Ingredients</h4>
@@ -41,18 +64,19 @@
             </thead>
             <tbody id="ingredientTBody">
                 @{ var i = 0; }
-                @foreach (var recipeIngredients in Model.RecipeIngredientModels)
+                @foreach (var recipeIngredients in Model.RecipeModel.RecipeIngredientModels)
                 {
                     <tr>
                         <td>
-                            <input asp-for="@recipeIngredients.IngredientId" name="RecipeIngredientModels[@i].IngredientId" hidden />
-                            <input asp-for="@recipeIngredients.IngredientQuantity" name="RecipeIngredientModels[@i].IngredientQuantity" />
+                            <input asp-for="@recipeIngredients.IngredientId" name="RecipeModel.RecipeIngredientModels[@i].IngredientId" hidden />
+                            <input asp-for="@recipeIngredients.IngredientQuantity" name="RecipeModel.RecipeIngredientModels[@i].IngredientQuantity" />
                         </td>
                         <td>
-                            <input asp-for="@recipeIngredients.IngredientUnit" name="RecipeIngredientModels[@i].IngredientUnit" />
+                            <input asp-for="@recipeIngredients.IngredientUnit" name="RecipeModel.RecipeIngredientModels[@i].IngredientUnit" />
                         </td>
                         <td>
-                            <input asp-for="@recipeIngredients.IngredientsModel.Ingredient" name="RecipeIngredientModels[@i].IngredientsModel.Ingredient" />
+                            <input asp-for="@recipeIngredients.IngredientsModel.Ingredient" 
+                                   name="RecipeModel.RecipeIngredientModels[@i].IngredientsModel.Ingredient" />
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger">Delete</button>
@@ -78,12 +102,18 @@
                     var j = 0;
                     var step = 1;
                 }
-                @foreach (var instructions in Model.InstructionModels)
+                @foreach (var instructions in Model.RecipeModel.InstructionModels)
                 {
                     <tr>
-                        <td style="text-align: center;"><input asp-for="@instructions.Id" name="InstructionModels[@j].Id" hidden /><strong>@step</strong></td>
-                        <td><input asp-for="@instructions.Instruction" name="InstructionModels[@j].Instruction" /></td>
-                        <td><button type="button" class="btn btn-danger">Delete</button></td>
+                        <td style="text-align: center;">
+                            <input asp-for="@instructions.Id" name="RecipeModel.InstructionModels[@j].Id" hidden /><strong>@step</strong>
+                        </td>
+                        <td>
+                            <input asp-for="@instructions.Instruction" name="RecipeModel.InstructionModels[@j].Instruction" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                     j++;
                     step++;
@@ -102,13 +132,13 @@
     
 <script>
         $(document).ready(function () {
-            var index = "@Model.RecipeIngredientModels.Count()";
+            var index = "@Model.RecipeModel.RecipeIngredientModels.Count()";
             var count = 0;
             $("#addIngredientButton").click(function () {
                 $("#ingredientTBody")
-                    .append('<tr><td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientQuantity" /></td>'
-                        + '<td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientUnit" /></td>'
-                        + '<td><input type="text" name="RecipeIngredientModels[' + index + '].IngredientsModel.Ingredient" /></td>'
+                    .append('<tr><td><input type="text" name="RecipeModel.RecipeIngredientModels[' + index + '].IngredientQuantity" /></td>'
+                        + '<td><input type="text" name="RecipeModel.RecipeIngredientModels[' + index + '].IngredientUnit" /></td>'
+                        + '<td><input type="text" name="RecipeModel.RecipeIngredientModels[' + index + '].IngredientsModel.Ingredient" /></td>'
                         + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
                 index++;
             });
@@ -126,13 +156,13 @@
         });
 
         $(document).ready(function () {
-            var index = "@Model.InstructionModels.Count()";
-            var step = "@Model.InstructionModels.Count()";
+            var index = "@Model.RecipeModel.InstructionModels.Count()";
+            var step = "@Model.RecipeModel.InstructionModels.Count()";
             step++;
             $("#addInstructionButton").click(function () {
                 $("#instructionTBody")
                     .append('<tr><td style="text-align: center"><strong>' + step + '</strong></td>'
-                        + '<td><input type="text" name="InstructionModels[' + index + '].Instruction" /></td>'
+                        + '<td><input type="text" name="RecipeModel.InstructionModels[' + index + '].Instruction" /></td>'
                         + '<td><button type="button" class="btn btn-danger">Delete</button></td></tr');
                 index++;
                 step++;
@@ -152,6 +182,13 @@
                     count++;
                     step++;
                 });
+            });
+        });
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next(".custom-file-label").html(fileName);
+                $("#img-preview").attr('src', URL.createObjectURL(event.target.files[0]));
             });
         });
 </script>   
