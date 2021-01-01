@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#Ignore uploaded images
+RecipeManagerCoreMVC/wwwroot/Images/UploadedImages/*
+!RecipeManagerCoreMVC/wwwroot/Images/UploadedImages/.gitkeep
+
 # User-specific files
 *.rsuser
 *.suo

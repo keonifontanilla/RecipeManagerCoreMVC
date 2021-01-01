@@ -44,8 +44,9 @@ namespace RecipeManagerCoreMVC.Controllers
         [HttpGet("Recipes/Recipe/{id?}/{name?}")]
         public IActionResult Details(int? id)
         {
-            if (id == null || id == 0) return Error();
             RecipeModel recipe = GetRecipe(id);
+
+            if (recipe == null) return ErrorStatusCode404(id);
 
             return View(recipe);
         }
@@ -53,14 +54,30 @@ namespace RecipeManagerCoreMVC.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            if (id == null || id == 0) return Error();
             RecipeModel recipe = GetRecipe(id);
+
+            if (recipe == null) return ErrorStatusCode404(id);
+
             var recipesEditViewModel = new RecipesEditViewModel
             {
                 RecipeModel = recipe
             };
             
             return View(recipesEditViewModel);
+        }
+
+        private IActionResult ErrorStatusCode404(int? id)
+        {
+            try
+            {
+                Response.StatusCode = 404;
+                return View("RecipeNotFound", id.Value);
+            }
+            catch (Exception)
+            {
+                return Error();
+            }
+            
         }
 
         [HttpPost]
@@ -140,7 +157,7 @@ namespace RecipeManagerCoreMVC.Controllers
         {
             RecipeModel recipeModel = GetRecipe(id);
 
-            if (recipeModel == null) return Error();
+            if (recipeModel == null) return ErrorStatusCode404(id);
 
             //// Remove ingredients that belongs to the recipe
             //foreach (var recipeIngredientModels in recipeModel.RecipeIngredientModels)
