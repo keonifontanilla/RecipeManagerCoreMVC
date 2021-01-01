@@ -1,7 +1,7 @@
 ﻿@model RecipeManagerCoreMVC.ViewModels.RecipesEditViewModel
 @{
     ViewData["Title"] = "Edit";
-    var photoPath = "~/Images/" + (Model.RecipeModel.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+    var photoPath = "~/Images/UploadedImages/" + (Model.RecipeModel.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
 }
 
 <form enctype="multipart/form-data" method="Post" asp-controller="Recipes" asp-action="Edit">

@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
     var typePhotos = new[] {"breakfastImg.jpg", "mainImg.jpg", "sideImg.jpg", "dessertImg.jpg", "drinkImg.jpg"};
-    var featuredPhoto1 = "~/Images/" + (Model[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
-    var featuredPhoto2 = "~/Images/" + (Model[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
-    var featuredPhoto3 = "~/Images/" + (Model[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
+    var featuredPhoto1 = "~/Images/UploadedImages/" + (Model[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
+    var featuredPhoto2 = "~/Images/UploadedImages/" + (Model[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
+    var featuredPhoto3 = "~/Images/UploadedImages/" + (Model[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg"); 
 }
 
 <div class="container">

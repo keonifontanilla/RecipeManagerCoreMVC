@@ -76,7 +76,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 string FileName = null;
                 if (homeCreateViewModel.Photo != null)
                 {
-                    var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                    var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "uploadedImages");
                     FileName = $"{Guid.NewGuid()}_{homeCreateViewModel.Photo.FileName}";
                     var path = Path.Combine(imageFolder, FileName);
                     using (var fileStream = new FileStream(path, FileMode.Create))

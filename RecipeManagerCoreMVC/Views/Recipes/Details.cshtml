@@ -1,7 +1,7 @@
 ﻿@model RecipeManagerCoreMVC.Models.RecipeModel;
 @{
     ViewData["Title"] = "Details";
-    var photoPath = "~/Images/" + (Model.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+    var photoPath = "~/Images/UploadedImages/" + (Model.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
 }
 
 <div class="container">

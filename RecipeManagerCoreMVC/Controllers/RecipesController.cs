@@ -113,7 +113,7 @@ namespace RecipeManagerCoreMVC.Controllers
                         DeleteOldPhotoPath(recipeModel);
                     }
 
-                    var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                    var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "uploadedImages");
                     FileName = $"{Guid.NewGuid()}_{recipesEditViewModel.Photo.FileName}";
                     var path = Path.Combine(imageFolder, FileName);
                     using (var fileStream = new FileStream(path, FileMode.Create))
@@ -134,7 +134,7 @@ namespace RecipeManagerCoreMVC.Controllers
 
         private void DeleteOldPhotoPath(RecipeModel recipeModel)
         {
-            var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images",
+            var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "uploadedImages",
                 recipeModel.RecipeInfoModel.PhotoPath);
             System.IO.File.Delete(oldPhotoPath);
         }
