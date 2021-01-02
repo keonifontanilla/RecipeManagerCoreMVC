@@ -16,7 +16,7 @@
             <div class="col-sm-4 mb-4">
                 <div class="card h-100 rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" asp-route-name="@recipe.RecipeName">
-                        <img src=@photoPath asp-append-version="true" class="card-top img-fluid" />
+                        <img src=@photoPath asp-append-version="true" class="card-top img-fluid" style="width:100%; max-height: 225px" />
                     </a>
                     <div class="card-header text-center">
                         <h5>@recipe.RecipeName</h5>

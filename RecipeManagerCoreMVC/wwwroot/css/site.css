@@ -138,3 +138,13 @@ table td input {
 .embed-responsive .card-img-top {
     object-fit: cover;
 }
+
+.main-random-card img {
+    width: 100%;
+    max-height: 425.17px;
+}
+
+.random-card img {
+    width: 100%;
+    max-height: 245px;
+}

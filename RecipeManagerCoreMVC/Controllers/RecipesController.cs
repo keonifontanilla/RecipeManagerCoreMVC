@@ -104,6 +104,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 recipe.RecipeType = recipeModel.RecipeType;
                 recipe.RecipeIngredientModels = recipeModel.RecipeIngredientModels;
                 recipe.InstructionModels = recipeModel.InstructionModels;
+                recipe.UpdatedDated = DateTime.Now;
 
                 string FileName = null;
                 if (recipesEditViewModel.Photo != null)
