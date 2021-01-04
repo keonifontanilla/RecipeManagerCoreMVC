@@ -30,6 +30,17 @@ namespace RecipeManagerCoreMVC.Models
                 .HasOne(x => x.RecipeInfoModel)
                 .WithOne(x => x.RecipeModel)
                 .HasForeignKey<RecipeInfoModel>(x => x.RecipeId);
+
+            InitialData(modelBuilder);
+        }
+
+        private static void InitialData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RecipeModel>().HasData(
+                new RecipeModel { Id = 1, RecipeName = "Recipe1" },
+                new RecipeModel { Id = 2, RecipeName = "Recipe2" },
+                new RecipeModel { Id = 3, RecipeName = "Recipe3" }
+            );
         }
     }
 }
