@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RecipeManagerCoreMVC.ViewModels;
 using System;
@@ -26,12 +27,14 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
@@ -56,20 +59,32 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, false);
 
-                if (result.Succeeded) return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else 
+                    { 
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
 
                 ModelState.AddModelError("", "Invalid Login Attempt.");
             }

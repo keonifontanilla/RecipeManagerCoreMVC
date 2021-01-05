@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -28,6 +29,7 @@ namespace RecipeManagerCoreMVC.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
+        [AllowAnonymous]
         public IActionResult Index(RecipeType? recipeType)
         {
             IEnumerable<RecipeModel> recipes = _db.Recipes.Include(x => x.RecipeInfoModel);
@@ -42,6 +44,7 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpGet("Recipes/Recipe/{id?}/{name?}")]
+        [AllowAnonymous]
         public IActionResult Details(int? id)
         {
             RecipeModel recipe = GetRecipe(id);
@@ -178,6 +181,7 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Search(string name)
         {
             IEnumerable<RecipeModel> recipes = _db.Recipes

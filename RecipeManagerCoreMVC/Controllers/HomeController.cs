@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -27,6 +28,7 @@ namespace RecipeManagerCoreMVC.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             List<RecipeModel> recipes = _db.Recipes
