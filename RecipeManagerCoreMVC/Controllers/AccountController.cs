@@ -33,6 +33,18 @@ namespace RecipeManagerCoreMVC.Controllers
             return View();
         }
 
+        // Client side validation
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CheckDuplicateEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null) return Json(true);
+
+            return Json($"Email {email} is already taken");
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
