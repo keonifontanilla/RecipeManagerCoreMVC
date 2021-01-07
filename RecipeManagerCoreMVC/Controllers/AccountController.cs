@@ -103,5 +103,12 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return View(loginViewModel);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
