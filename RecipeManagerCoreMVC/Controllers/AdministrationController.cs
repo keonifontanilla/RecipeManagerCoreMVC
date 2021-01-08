@@ -29,6 +29,80 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var editUserViewModel = new EditUserViewModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Claims = userClaims.Select(x => x.Value).ToList(),
+                Roles = userRoles
+            };
+
+            return View(editUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded) return RedirectToAction("ListUsers");
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View("ListUsers");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel editUserViewModel)
+        {
+            var user = await _userManager.FindByIdAsync(editUserViewModel.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {editUserViewModel.Id} cannot be found";
+                return View("NotFound");
+            }
+
+            user.Email = editUserViewModel.Email;
+            user.UserName = editUserViewModel.UserName;
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded) return RedirectToAction("ListUsers");
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(editUserViewModel);
+        }
+
+        [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
