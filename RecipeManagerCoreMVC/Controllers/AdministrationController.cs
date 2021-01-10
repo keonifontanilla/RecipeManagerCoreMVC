@@ -126,6 +126,59 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ManageUserRoles(string userId)
+        {
+            ViewBag.userId = userId;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {userId} cannot be found";
+                return View("NotFound");
+            }
+
+            var userRolesViewModels = new List<UserRolesViewModel>();
+            
+            foreach (var role in _roleManager.Roles)
+            {
+                var userRolesViewModel = new UserRolesViewModel { RoleId = role.Id, RoleName = role.Name };
+                userRolesViewModel.IsSelected = await _userManager.IsInRoleAsync(user, role.Name) ? true : false;
+                userRolesViewModels.Add(userRolesViewModel);
+            }
+
+            return View(userRolesViewModels);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> userRolesViewModels, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {userId} cannot be found";
+                return View("NotFound");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove user existing roles");
+                return View(userRolesViewModels);
+            }
+
+            result = await _userManager.AddToRolesAsync(user, userRolesViewModels.Where(x => x.IsSelected).Select(x => x.RoleName));
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add user existing roles");
+                return View(userRolesViewModels);
+            }
+
+            return RedirectToAction("EditUser", new { id = userId });
+        }
+
+        [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
