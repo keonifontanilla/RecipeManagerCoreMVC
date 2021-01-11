@@ -37,6 +37,15 @@ namespace RecipeManagerCoreMVC
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role"));
+
+                options.AddPolicy("EditRolePolicy", policy => policy.RequireClaim("Edit Role"));
+
+                options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

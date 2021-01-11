@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RecipeManagerCoreMVC.Models;
 using RecipeManagerCoreMVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RecipeManagerCoreMVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminRolePolicy")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -78,6 +80,7 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "DeleteRolePolicy")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -210,6 +213,8 @@ namespace RecipeManagerCoreMVC.Controllers
             return View(roles);
         }
 
+        [HttpGet]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -238,6 +243,7 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(EditRoleViewModel editRoleViewModel)
         {
             var role = await _roleManager.FindByIdAsync(editRoleViewModel.Id);
@@ -332,6 +338,69 @@ namespace RecipeManagerCoreMVC.Controllers
             }
 
             return RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageUserClaims(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {userId} cannot be found";
+                return View("NotFound");
+            }
+
+            var existingUserClaims = await _userManager.GetClaimsAsync(user);
+            var userClaimsViewModel = new UserClaimsViewModel { UserId = userId };
+
+            foreach (var claim in ClaimsStore.AllClaims)
+            {
+                UserClaim userClaim = new UserClaim()
+                {
+                    ClaimType = claim.Type
+                };
+
+                if (existingUserClaims.Any(x => x.Type == claim.Type))
+                {
+                    userClaim.IsSelected = true;
+                }
+
+                userClaimsViewModel.Claims.Add(userClaim);
+            }
+
+            return View(userClaimsViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageUserClaims(UserClaimsViewModel userClaimsViewModel)
+        {
+            var user = await _userManager.FindByIdAsync(userClaimsViewModel.UserId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {userClaimsViewModel.UserId} cannot be found";
+                return View("NotFound");
+            }
+
+            var claims = await _userManager.GetClaimsAsync(user);
+            var result = await _userManager.RemoveClaimsAsync(user, claims);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove user existing claims");
+                return View(userClaimsViewModel);
+            }
+
+            result = await _userManager.AddClaimsAsync(user, userClaimsViewModel.Claims.Where(x => x.IsSelected).Select(x => new Claim(x.ClaimType, x.ClaimType)));
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add selected user claims");
+                return View(userClaimsViewModel);
+            }
+
+            return RedirectToAction("EditUser", new { Id = userClaimsViewModel.UserId });
         }
     }
 }
