@@ -45,7 +45,11 @@ namespace RecipeManagerCoreMVC
             {
                 options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role", "true"));
 
-                options.AddPolicy("EditRolePolicy", policy => policy.RequireClaim("Edit Role", "true"));
+                options.AddPolicy("EditRolePolicy", policy => policy.RequireAssertion(context =>
+                    context.User.IsInRole("Moderator") && 
+                    context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") || 
+                    context.User.IsInRole("Admin")
+                    ));
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"));
             });
