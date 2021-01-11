@@ -49,7 +49,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
-                Claims = userClaims.Select(x => x.Value).ToList(),
+                Claims = userClaims.Select(x => x.Type + " : " + x.Value).ToList(),
                 Roles = userRoles
             };
 
@@ -361,7 +361,7 @@ namespace RecipeManagerCoreMVC.Controllers
                     ClaimType = claim.Type
                 };
 
-                if (existingUserClaims.Any(x => x.Type == claim.Type))
+                if (existingUserClaims.Any(x => x.Type == claim.Type && x.Value == "true"))
                 {
                     userClaim.IsSelected = true;
                 }
@@ -392,7 +392,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 return View(userClaimsViewModel);
             }
 
-            result = await _userManager.AddClaimsAsync(user, userClaimsViewModel.Claims.Where(x => x.IsSelected).Select(x => new Claim(x.ClaimType, x.ClaimType)));
+            result = await _userManager.AddClaimsAsync(user, userClaimsViewModel.Claims.Select(x => new Claim(x.ClaimType, x.IsSelected ? "true" : "false")));
 
             if (!result.Succeeded)
             {
