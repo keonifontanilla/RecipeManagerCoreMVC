@@ -402,5 +402,12 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return RedirectToAction("EditUser", new { Id = userClaimsViewModel.UserId });
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
