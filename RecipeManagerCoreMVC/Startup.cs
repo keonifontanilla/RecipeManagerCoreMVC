@@ -31,8 +31,9 @@ namespace RecipeManagerCoreMVC
         {
             services.AddDbContextPool<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RecipeDBConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddControllersWithViews(options => {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -49,7 +50,7 @@ namespace RecipeManagerCoreMVC
                     context.User.IsInRole("Moderator") && 
                     context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") || 
                     context.User.IsInRole("Admin")
-                    ));
+                ));
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"));
             });
