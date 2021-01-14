@@ -157,5 +157,84 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return View(loginViewModel);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(forgotPasswordViewModel.Email);
+
+                if (user != null && await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var passwordResetLink = Url.Action("ResetPassword", "Account", new { email = forgotPasswordViewModel.Email, token = token }, Request.Scheme);
+
+                    // For reset link in output window
+                    _logger.Log(LogLevel.Warning, passwordResetLink);
+                }
+                ViewBag.SuccessTitle = "Password Reset";
+                ViewBag.SuccessMessage = "Email sent with instructions to reset password.";
+                return View("Success");
+            }
+            return View(forgotPasswordViewModel);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            if (token == null || email == null)
+            {
+                ModelState.AddModelError("", "Invalid password reset token");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordViewModel.Email);
+                
+                if (user != null)
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, resetPasswordViewModel.Token, resetPasswordViewModel.Password);
+
+                    if (result.Succeeded)
+                    {
+                        ViewBag.SuccessTitle = "Password Reset";
+                        ViewBag.SuccessMessage = "Password has been reset. Please login.";
+                        return View("Success");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                    return View(resetPasswordViewModel);
+                }
+
+                ViewBag.SuccessTitle = "Password Reset";
+                ViewBag.SuccessMessage = "Password has been reset.  Please login.";
+                return View("Success");
+            }
+
+            return View(resetPasswordViewModel);
+        }
     }
 }
