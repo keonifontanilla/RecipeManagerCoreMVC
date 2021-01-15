@@ -38,6 +38,7 @@ namespace RecipeManagerCoreMVC
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 3;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -51,7 +52,7 @@ namespace RecipeManagerCoreMVC
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role", "true"));
+                options.AddPolicy("DeleteRolePolicy", policy => policy.RequireRole("Admin"));
 
                 options.AddPolicy("EditRolePolicy", policy => policy.RequireAssertion(context =>
                     context.User.IsInRole("Moderator") && 
