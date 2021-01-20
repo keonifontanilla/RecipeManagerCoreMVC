@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RecipeManagerCoreMVC.Data;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace RecipeManagerCoreMVC.Controllers
 {
+    [Authorize(Policy = "IsAdmin")]
     public class AdministrationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
