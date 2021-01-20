@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using RecipeManagerCoreMVC.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User) && User.HasClaim(x => x.Type == "IsAdmin" && x.Value == "true"))
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" asp-controller="Administration" asp-action="ListUsers">Users</a>
+        </div>
+    </li>
+}
