@@ -8,5 +8,20 @@ namespace RecipeManagerCoreMVC.Data
 {
     public class ApplicationUser : IdentityUser
     {
+        [PersonalData]
+        public string FirstName { get; set; }
+        [PersonalData]
+        public string LastName { get; set; }
+        [PersonalData]
+        public string AboutMe { get; set; }
+        [PersonalData]
+        public string Location { get; set; }
+        [PersonalData]
+        public string PinterestLink { get; set; }
+        [PersonalData]
+        public string FacebookLink { get; set; }
+        [PersonalData]
+        public string TwitterLink { get; set; }
+
     }
 }
