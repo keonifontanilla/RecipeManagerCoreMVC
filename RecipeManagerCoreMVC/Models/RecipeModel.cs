@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RecipeManagerCoreMVC.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,8 @@ namespace RecipeManagerCoreMVC.Models
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         [DisplayName("Updated Date")]
         public DateTime? UpdatedDated { get; set; }
+        public string AuthorId { get; set; }
+        public ApplicationUser Author { get; set; }
         public ICollection<RecipeIngredientModel> RecipeIngredientModels { get; set; }
         public ICollection<InstructionModel> InstructionModels { get; set; }
         public RecipeInfoModel RecipeInfoModel { get; set; }

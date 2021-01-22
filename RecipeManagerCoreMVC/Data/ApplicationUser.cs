@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RecipeManagerCoreMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,6 @@ namespace RecipeManagerCoreMVC.Data
         public string FacebookLink { get; set; }
         [PersonalData]
         public string TwitterLink { get; set; }
-
+        public ICollection<RecipeModel> RecipeModels { get; set; }
     }
 }

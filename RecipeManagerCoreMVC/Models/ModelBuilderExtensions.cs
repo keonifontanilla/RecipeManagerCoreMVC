@@ -31,6 +31,12 @@ namespace RecipeManagerCoreMVC.Models
                 .WithOne(x => x.RecipeModel)
                 .HasForeignKey<RecipeInfoModel>(x => x.RecipeId);
 
+            modelBuilder.Entity<RecipeModel>()
+                .HasOne(x => x.Author)
+                .WithMany(x => x.RecipeModels)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasForeignKey(x => x.AuthorId);
+
             InitialData(modelBuilder);
         }
 

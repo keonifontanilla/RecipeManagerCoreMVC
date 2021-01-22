@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,12 +21,14 @@ namespace RecipeManagerCoreMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hostingEnvironment)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hostingEnvironment, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _db = db;
             _hostingEnvironment = hostingEnvironment;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -88,6 +91,8 @@ namespace RecipeManagerCoreMVC.Controllers
                     recipeModel.RecipeInfoModel.PhotoPath = FileName; 
                 }
 
+                var userId = _userManager.GetUserId(User);
+
                 var newRecipe = new RecipeModel
                 {
                     RecipeName = recipeModel.RecipeName,
@@ -96,7 +101,8 @@ namespace RecipeManagerCoreMVC.Controllers
                     CreatedDate = recipeModel.CreatedDate,
                     RecipeIngredientModels = recipeIngredientsModels,
                     InstructionModels = instructionModels,
-                    RecipeInfoModel = recipeModel.RecipeInfoModel
+                    RecipeInfoModel = recipeModel.RecipeInfoModel,
+                    AuthorId = userId
                 };
 
                 _db.Add(newRecipe);
