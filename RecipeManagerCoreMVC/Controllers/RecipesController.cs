@@ -150,6 +150,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 .ThenInclude(x => x.IngredientsModel)
                 .Include(x => x.InstructionModels)
                 .Include(x => x.RecipeInfoModel)
+                .Include(x => x.Author)
                 .FirstOrDefault(x => x.Id == id);
 
             return recipe;
