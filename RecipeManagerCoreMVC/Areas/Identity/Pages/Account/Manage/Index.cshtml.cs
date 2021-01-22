@@ -60,6 +60,9 @@ namespace RecipeManagerCoreMVC.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Twitter")]
             public string TwitterLink { get; set; }
 
+            [Display(Name = "User name")]
+            public string UserName { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -68,7 +71,6 @@ namespace RecipeManagerCoreMVC.Areas.Identity.Pages.Account.Manage
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
 
@@ -81,7 +83,7 @@ namespace RecipeManagerCoreMVC.Areas.Identity.Pages.Account.Manage
                 PinterestLink = user.PinterestLink,
                 FacebookLink = user.FacebookLink,
                 TwitterLink = user.TwitterLink,
-                PhoneNumber = phoneNumber
+                UserName = user.UserName
             };
         }
 
@@ -111,13 +113,13 @@ namespace RecipeManagerCoreMVC.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            var userName = await _userManager.GetUserNameAsync(user);
+            if (Input.UserName != userName)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.UserName);
+                if (!setUserNameResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Unexpected error when trying to set user name.";
                     return RedirectToPage();
                 }
             }
