@@ -1,0 +1,41 @@
+﻿@model IEnumerable<RecipeManagerCoreMVC.Models.RecipeModel>
+@{
+    ViewData["Title"] = "Recipes";
+    Layout = "~/Views/Profile/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var recipe in Model)
+        {
+            var photoPath = "~/Images/UploadedImages/" + (recipe.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+            <div class="col-sm-4 mb-4">
+                <div class="card h-100 rounded-0">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" asp-route-name="@recipe.RecipeName">
+                        <img src=@photoPath asp-append-version="true" class="card-top img-fluid" style="width:100%; max-height: 225px" />
+                    </a>
+                    <div class="card-header text-center">
+                        <h5>@recipe.RecipeName</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p class="text-truncate">@recipe.RecipeDescription</p>
+                            <p>@recipe.RecipeType</p>
+                            <p>@recipe.CreatedDate</p>
+                            <p>@recipe.UpdatedDated</p>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="row justify-content-center">
+                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-primary mr-1 details-btn-w">Edit</a>
+                            <form method="post" asp-controller="Recipes" asp-action="Delete">
+                                <input name="Id" value="@recipe.Id" hidden />
+                                <button class="btn btn-danger ml-1 details-btn-w" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

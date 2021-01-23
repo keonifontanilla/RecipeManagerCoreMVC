@@ -11,11 +11,13 @@ namespace RecipeManagerCoreMVC.Controllers
 {
     public class ProfileController : Controller
     {
+        private readonly ApplicationDbContext _db;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProfileController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public ProfileController(ApplicationDbContext db, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
+            _db = db;
             _signInManager = signInManager;
             _userManager = userManager;
         }
@@ -44,6 +46,21 @@ namespace RecipeManagerCoreMVC.Controllers
             };
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Recipes(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User {userName} cannot be found";
+                return View("NotFound");
+            }
+
+            var recipes = _db.Recipes.Where(x => x.AuthorId == user.Id);
+
+            return View(recipes);
         }
     }
 }
