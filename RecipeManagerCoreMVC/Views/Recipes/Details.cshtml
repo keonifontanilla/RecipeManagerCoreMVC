@@ -12,7 +12,13 @@
     <div>
         <p>@Model.RecipeDescription</p>
     </div>
-    <p><strong>Author: </strong>@if (Model.Author != null) { @Model.Author.UserName }</p>
+    <p>
+        <strong>Author: </strong>
+        @if (Model.Author != null) 
+        {
+            <a asp-controller="Profile"  asp-action="Details" asp-route-userName="@Model.Author.UserName">@Model.Author.UserName</a>
+        }
+    </p>
     <div class="border mb-3">
         <div class="row">
             <div class="col-sm-8">

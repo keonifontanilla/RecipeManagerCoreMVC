@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecipeManagerCoreMVC.Data;
 using RecipeManagerCoreMVC.ViewModels;
 using System;
@@ -58,7 +59,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 return View("NotFound");
             }
 
-            var recipes = _db.Recipes.Where(x => x.AuthorId == user.Id);
+            var recipes = _db.Recipes.Include(x => x.RecipeInfoModel).Where(x => x.AuthorId == user.Id);
 
             return View(recipes);
         }
