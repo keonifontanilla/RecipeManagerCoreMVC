@@ -27,7 +27,7 @@ namespace RecipeManagerCoreMVC.Controllers
 
             if (statusCode == 404)
             {
-                ViewBag.ErrorMsg = "Page Not Found";
+                ViewBag.ErrorMessage = "Page Not Found";
                 _logger.LogWarning($"404 error occured. Path = {statusCodeResult.OriginalPath} and QueryString = {statusCodeResult.OriginalQueryString}");
             }
             return View("NotFound");

@@ -32,6 +32,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 ViewBag.ErrorMessage = $"User {userName} cannot be found";
                 return View("NotFound");
             }
+            ViewBag.UserName = user.UserName;
 
             var model = new ProfileViewModel
             {
@@ -58,6 +59,7 @@ namespace RecipeManagerCoreMVC.Controllers
                 ViewBag.ErrorMessage = $"User {userName} cannot be found";
                 return View("NotFound");
             }
+            ViewBag.UserName = user.UserName;
 
             var recipes = _db.Recipes.Include(x => x.RecipeInfoModel).Where(x => x.AuthorId == user.Id);
 
