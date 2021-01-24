@@ -1,4 +1,7 @@
-﻿@model RecipeManagerCoreMVC.Models.RecipeModel;
+﻿@using Microsoft.AspNetCore.Identity;
+@using RecipeManagerCoreMVC.Data;
+@inject UserManager<ApplicationUser> UserManager;
+@model RecipeManagerCoreMVC.Models.RecipeModel;
 @{
     ViewData["Title"] = "Details";
     var photoPath = "~/Images/UploadedImages/" + (Model.RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
@@ -53,4 +56,14 @@
             counter++;
         }
     </div>
+    @if (User.HasClaim("IsAdmin", "true"))
+    {
+        <div class="row justify-content-center mt-3">
+            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1 details-btn-w">Edit</a>
+            <form method="post" asp-controller="Recipes" asp-action="Delete">
+                <input name="Id" value="@Model.Id" hidden />
+                <button class="btn btn-danger ml-1 details-btn-w" type="submit">Delete</button>
+            </form>
+        </div>
+    }
 </div>
