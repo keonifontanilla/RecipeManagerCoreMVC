@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecipeManagerCoreMVC.Data;
@@ -23,6 +24,7 @@ namespace RecipeManagerCoreMVC.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);
@@ -50,6 +52,7 @@ namespace RecipeManagerCoreMVC.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Recipes(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);

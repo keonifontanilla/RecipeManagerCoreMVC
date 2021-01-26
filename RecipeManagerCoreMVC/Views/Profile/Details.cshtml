@@ -22,6 +22,10 @@
         <input class="col-sm-6" value="@Model.FirstName" disabled />
     </div>
     <div class="row mt-3">
+        <label asp-for="LastName" class="col-sm-3"></label>
+        <input class="col-sm-6" value="@Model.LastName" disabled />
+    </div>
+    <div class="row mt-3">
         <label asp-for="AboutMe" class="col-sm-3"></label>
         <textarea class="col-sm-6" disabled>@Model.AboutMe</textarea>
     </div>
