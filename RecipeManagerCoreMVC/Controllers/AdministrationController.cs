@@ -87,5 +87,29 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded) return RedirectToAction("ListUsers");
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View("ListUsers");
+        }
     }
 }
