@@ -1,0 +1,78 @@
+﻿@model RecipeManagerCoreMVC.ViewModels.EditUserViewModel;
+@{
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit User</h1>
+
+<form method="post">
+    <div class="form-group row">
+        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" disabled />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="UserName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="FirstName" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="LastName" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="AboutMe" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <textarea asp-for="AboutMe" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Location" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Location" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PinterestLink" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="PinterestLink" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="FacebookLink" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="FacebookLink" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="TwitterLink" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="TwitterLink" class="form-control" />
+        </div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-controller="Administration" asp-action="ListUsers" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</form>

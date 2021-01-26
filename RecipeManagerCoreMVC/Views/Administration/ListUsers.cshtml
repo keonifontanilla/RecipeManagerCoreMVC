@@ -24,7 +24,8 @@
                     <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>
-                        <a href="#" class="btn btn-primary">Edit</a>
+                        <a asp-controller="Profile" asp-action="Details" asp-route-userName="@user.UserName" class="btn btn-primary">View</a>
+                        <a asp-controller="Administration" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
                         <a href="#" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>

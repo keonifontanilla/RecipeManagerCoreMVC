@@ -46,7 +46,7 @@
         <input class="col-sm-6" value="@Model.TwitterLink" disabled />
     </div>
     <div class="row mt-3">
-        @if ((UserManager.GetUserName(User) == Model.UserName) || User.HasClaim("IsAdmin", "true"))
+        @if (UserManager.GetUserName(User) == Model.UserName)
         {
             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="col-sm-12">Edit my profile</a>
         }
