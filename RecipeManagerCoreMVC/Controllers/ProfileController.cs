@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecipeManagerCoreMVC.Data;
+using RecipeManagerCoreMVC.Models;
 using RecipeManagerCoreMVC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,26 @@ namespace RecipeManagerCoreMVC.Controllers
             ViewBag.UserName = user.UserName;
 
             var recipes = _db.Recipes.Include(x => x.RecipeInfoModel).Where(x => x.AuthorId == user.Id);
+
+            return View(recipes);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Favorites(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User {userName} cannot be found";
+                return View("NotFound");
+            }
+            ViewBag.UserName = user.UserName;
+
+            IEnumerable<RecipeModel> recipes = _db.UserFavoriteRecipes
+                .Include(x => x.RecipeModel.RecipeInfoModel)
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.RecipeModel);
 
             return View(recipes);
         }

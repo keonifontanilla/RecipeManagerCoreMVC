@@ -34,7 +34,7 @@
                 <a class="nav-link" href="#">My Articles</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">My Favorites</a>
+                <a asp-controller="Profile" asp-action="Favorites" asp-route-userName="@ViewBag.UserName" class="nav-link">My Favorites</a>
             </li>
         </ul>
     </div>
