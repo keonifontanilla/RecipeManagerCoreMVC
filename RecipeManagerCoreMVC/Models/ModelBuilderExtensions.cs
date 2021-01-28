@@ -37,6 +37,17 @@ namespace RecipeManagerCoreMVC.Models
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasForeignKey(x => x.AuthorId);
 
+            modelBuilder.Entity<FavoriteModel>()
+                .HasKey(x => new { x.RecipeId, x.UserId });
+            modelBuilder.Entity<FavoriteModel>()
+                .HasOne(x => x.ApplicationUser)
+                .WithMany(x => x.FavoriteModels)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<FavoriteModel>()
+                .HasOne(x => x.RecipeModel)
+                .WithMany(x => x.FavoriteModels)
+                .HasForeignKey(x => x.RecipeId);
+
             InitialData(modelBuilder);
         }
 

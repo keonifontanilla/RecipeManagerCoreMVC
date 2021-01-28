@@ -29,5 +29,6 @@ namespace RecipeManagerCoreMVC.Models
         public ICollection<RecipeIngredientModel> RecipeIngredientModels { get; set; }
         public ICollection<InstructionModel> InstructionModels { get; set; }
         public RecipeInfoModel RecipeInfoModel { get; set; }
+        public ICollection<FavoriteModel> FavoriteModels { get; set; }
     }
 }

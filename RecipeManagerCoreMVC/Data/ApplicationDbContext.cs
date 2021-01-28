@@ -20,6 +20,7 @@ namespace RecipeManagerCoreMVC.Data
         public DbSet<RecipeIngredientModel> RecipeIngredients { get; set; }
         public DbSet<InstructionModel> Instructions { get; set; }
         public DbSet<RecipeInfoModel> RecipeInfo { get; set; }
+        public DbSet<FavoriteModel> UserFavoriteRecipes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
