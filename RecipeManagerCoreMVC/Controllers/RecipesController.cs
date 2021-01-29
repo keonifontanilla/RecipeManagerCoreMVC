@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -21,12 +22,14 @@ namespace RecipeManagerCoreMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RecipesController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hostingEnvironment)
+        public RecipesController(ILogger<HomeController> logger, ApplicationDbContext db, IWebHostEnvironment hostingEnvironment, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _db = db;
             _hostingEnvironment = hostingEnvironment;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -201,6 +204,36 @@ namespace RecipeManagerCoreMVC.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Favorites(int recipeId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Unable to load user with ID '{_userManager.GetUserId(User)}'.";
+                return View("NotFound");
+            }
+
+            var favorites = _db.UserFavoriteRecipes.Where(x => x.UserId == user.Id);
+
+            foreach (var favorite in favorites)
+            {
+                if (favorite.RecipeId == recipeId) return RedirectToAction("Details", new { id = recipeId });
+            }
+
+            var favoriteModel = new FavoriteModel
+            {
+                UserId = user.Id,
+                RecipeId = recipeId
+            };
+
+            _db.UserFavoriteRecipes.Add(favoriteModel);
+            _db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = recipeId });
         }
     }
 }
