@@ -48,11 +48,23 @@ namespace RecipeManagerCoreMVC.Controllers
 
         [HttpGet("Recipes/Recipe/{id?}/{name?}")]
         [AllowAnonymous]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             RecipeModel recipe = GetRecipe(id);
-
+            
             if (recipe == null) return ErrorStatusCode404(id);
+            ViewBag.FavoriteSaved = false;
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var favorites = _db.UserFavoriteRecipes.Where(x => x.UserId == user.Id);
+
+                foreach (var favorite in favorites)
+                {
+                    if (favorite.RecipeId == id) ViewBag.FavoriteSaved = true;
+                }
+            }
 
             return View(recipe);
         }
@@ -215,13 +227,6 @@ namespace RecipeManagerCoreMVC.Controllers
             {
                 ViewBag.ErrorMessage = $"Unable to load user with ID '{_userManager.GetUserId(User)}'.";
                 return View("NotFound");
-            }
-
-            var favorites = _db.UserFavoriteRecipes.Where(x => x.UserId == user.Id);
-
-            foreach (var favorite in favorites)
-            {
-                if (favorite.RecipeId == recipeId) return RedirectToAction("Details", new { id = recipeId });
             }
 
             var favoriteModel = new FavoriteModel

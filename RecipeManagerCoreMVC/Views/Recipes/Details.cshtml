@@ -16,26 +16,33 @@
         <p>@Model.RecipeDescription</p>
     </div>
     <form method="post" asp-controller="Recipes" asp-action="Favorites" asp-route-recipeId="@Model.Id">
-        <a class="mb-3 float-right" href="#" data-toggle="modal" data-target="#favoriteModal_@Model.Id">Add to Favorites</a>
-        <div class="modal fade" id="favoriteModal_@Model.Id" tabindex="-1" role="dialog" aria-labelledby="favoriteModalLabel_@Model.Id" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="favoriteModalLabel_@Model.Id">Add to Favorites</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Add recipe favorites?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">Yes</button>
+        @if (!ViewBag.FavoriteSaved)
+        {
+            <a class="mb-3 float-right" href="#" data-toggle="modal" data-target="#favoriteModal_@Model.Id">Add to Favorites</a>
+            <div class="modal fade" id="favoriteModal_@Model.Id" tabindex="-1" role="dialog" aria-labelledby="favoriteModalLabel_@Model.Id" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="favoriteModalLabel_@Model.Id">Add to Favorites</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Add recipe favorites?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-primary">Yes</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <a class="mb-3 float-right" href="#">Saved</a>
+        }
     </form>
     <p>
         <strong>Author: </strong>
