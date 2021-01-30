@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using RecipeManagerCoreMVC.Data;
 @inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> SignInManager;
 @model RecipeManagerCoreMVC.Models.RecipeModel;
 @{
     ViewData["Title"] = "Details";
@@ -16,7 +17,7 @@
         <p>@Model.RecipeDescription</p>
     </div>
     <form method="post" asp-controller="Recipes" asp-action="Favorites" asp-route-recipeId="@Model.Id">
-        @if (!ViewBag.FavoriteSaved)
+        @if (!ViewBag.FavoriteSaved && SignInManager.IsSignedIn(User))
         {
             <a class="mb-3 float-right" href="#" data-toggle="modal" data-target="#favoriteModal_@Model.Id">Add to Favorites</a>
             <div class="modal fade" id="favoriteModal_@Model.Id" tabindex="-1" role="dialog" aria-labelledby="favoriteModalLabel_@Model.Id" aria-hidden="true">
@@ -39,9 +40,9 @@
                 </div>
             </div>
         }
-        else
+        else if (ViewBag.FavoriteSaved)
         {
-            <a class="mb-3 float-right" href="#">Saved</a>
+            <a asp-controller="Profile" asp-action="Favorites" asp-route-userName="@UserManager.GetUserName(User)" class="mb-3 float-right">Saved</a>
         }
     </form>
     <p>

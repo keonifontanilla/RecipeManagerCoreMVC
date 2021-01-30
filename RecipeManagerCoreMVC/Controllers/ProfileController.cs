@@ -89,5 +89,29 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return View(recipes);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFavorite(RecipeModel model, string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User {userName} cannot be found";
+                return View("NotFound");
+            }
+
+            var favoriteModel = new FavoriteModel
+            {
+                UserId = user.Id,
+                RecipeId = model.Id
+            };
+
+            _db.UserFavoriteRecipes.Remove(favoriteModel);
+            _db.SaveChanges();
+
+            return RedirectToAction("Favorites", new { userName = user.UserName });
+        }
     }
 }
