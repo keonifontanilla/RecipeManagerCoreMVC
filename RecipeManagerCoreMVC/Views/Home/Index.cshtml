@@ -1,10 +1,10 @@
-﻿@model List<RecipeManagerCoreMVC.Models.RecipeModel>
+﻿@model RecipeManagerCoreMVC.ViewModels.HomeIndexViewModel;
 @{
     ViewData["Title"] = "Home Page";
     var typePhotos = new[] { "breakfastImg.jpg", "mainImg.jpg", "sideImg.jpg", "dessertImg.jpg", "drinkImg.jpg" };
-    var featuredPhoto1 = "~/Images/UploadedImages/" + (Model[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
-    var featuredPhoto2 = "~/Images/UploadedImages/" + (Model[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
-    var featuredPhoto3 = "~/Images/UploadedImages/" + (Model[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+    var featuredPhoto1 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+    var featuredPhoto2 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+    var featuredPhoto3 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
 }
 
 <div class="container">
@@ -42,16 +42,16 @@
         <div class="row flex-column div-height">
             <div class="col-sm-12 px-1 pb-3 main-random-card" style="width: 40.5rem;">
                 <div class="card rounded-0">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[0].Id" asp-route-name="@Model[0].RecipeName">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[0].Id" asp-route-name="@Model.FeaturedRecipes[0].RecipeName">
                         <img src=@featuredPhoto1 asp-append-version="true" class="card-top img-fluid" />
                     </a>
                     <div class="card-header text-center">
-                        <h5>@Model[0].RecipeName</h5>
+                        <h5>@Model.FeaturedRecipes[0].RecipeName</h5>
                     </div>
                     <div class="card-body">
                         <div class="card-text">
-                            <p class="text-truncate">@Model[0].RecipeDescription</p>
-                            <p>@Model[0].RecipeType</p>
+                            <p class="text-truncate">@Model.FeaturedRecipes[0].RecipeDescription</p>
+                            <p>@Model.FeaturedRecipes[0].RecipeType</p>
                             <p>Author: Name</p>
                         </div>
                     </div>
@@ -59,21 +59,21 @@
             </div>
             <div class="col-auto mb-1 ml-5 random-card" style="width: 25rem;">
                 <div class="card rounded-0">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[1].Id" asp-route-name="@Model[1].RecipeName">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[1].Id" asp-route-name="@Model.FeaturedRecipes[1].RecipeName">
                         <img src=@featuredPhoto2 asp-append-version="true" class="card-top img-fluid" />
                     </a>
                     <div class="card-header text-center">
-                        <h5>@Model[1].RecipeName</h5>
+                        <h5>@Model.FeaturedRecipes[1].RecipeName</h5>
                     </div>
                 </div>
             </div>
             <div class="col-auto mt-4 ml-5 pt-2 random-card" style="width: 25rem;">
                 <div class="card rounded-0">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model[2].Id" asp-route-name="@Model[2].RecipeName">
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[2].Id" asp-route-name="@Model.FeaturedRecipes[2].RecipeName">
                         <img src=@featuredPhoto3 asp-append-version="true" class="card-top img-fluid" />
                     </a>
                     <div class="card-header text-center">
-                        <h5>@Model[2].RecipeName</h5>
+                        <h5>@Model.FeaturedRecipes[2].RecipeName</h5>
                     </div>
                 </div>
             </div>
@@ -82,31 +82,45 @@
     <div class="separator mt-5">My Favorites</div>
     <div class="container text-center my-3">
         <div class="row mx-auto my-auto">
-            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
-                <div class="carousel-inner w-100" role="listbox">
-                    @for (int y = 0; y < 11; y++)
-                    {
-                        <div class="carousel-item @(y == 0 ? "active" : null)">
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="http://placehold.it/380?text=1">
+            @if (Model.Favorites.Any())
+            {
+                <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                    <div class="carousel-inner w-100" role="listbox">
+                        @for (int y = 0; y < Model.Favorites.Count; y++)
+                        {
+                            var photoPath = "~/Images/UploadedImages/" + (Model.Favorites[y].RecipeInfoModel.PhotoPath ?? "defaultImg.jpg");
+                            <div class="carousel-item @(y == 0 ? "active" : null)">
+                                <div class="col-sm-4 mb-4">
+                                    <div class="card h-100 rounded-0">
+                                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.Favorites[y].Id" asp-route-name="@Model.Favorites[y].RecipeName">
+                                            <img src=@photoPath asp-append-version="true" class="card-top img-fluid" style="width:100%; max-height: 225px; height: 15vw;" />
+                                        </a>
+                                        <div class="card-header text-center">
+                                            <h5>@Model.Favorites[y].RecipeName</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-text">
+                                                <p class="text-truncate">@Model.Favorites[y].RecipeDescription</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
+                    <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            }
         </div>
-        <div class="mt-5" style="border-bottom: 5px solid #000;"></div>
     </div>
+    <div class="mt-3" style="border-bottom: 5px solid #000;"></div>
 </div>
 
 @section Scripts{

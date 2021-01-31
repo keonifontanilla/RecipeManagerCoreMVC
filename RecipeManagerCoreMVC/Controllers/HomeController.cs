@@ -32,14 +32,26 @@ namespace RecipeManagerCoreMVC.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<RecipeModel> recipes = _db.Recipes
+            List<RecipeModel> featuredRecipes = _db.Recipes
                 .OrderBy(x => Guid.NewGuid())
                 .Include(x => x.RecipeInfoModel)
                 .Take(3).ToList();
 
-            return View(recipes);
+            var model = new HomeIndexViewModel { FeaturedRecipes = featuredRecipes };
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                List<RecipeModel> favorites = _db.UserFavoriteRecipes
+                .Include(x => x.RecipeModel.RecipeInfoModel)
+                .Where(x => x.UserId == user.Id)
+                .Select(x => x.RecipeModel).ToList();
+                model.Favorites = favorites;
+            }
+
+            return View(model);
         }
 
         [HttpGet]
