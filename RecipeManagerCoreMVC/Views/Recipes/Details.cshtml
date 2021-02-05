@@ -14,7 +14,14 @@
         <img src=@photoPath asp-append-version="true" class="img-fluid" />
     </div>
     <div>
-        <p>@Html.Raw(Model.RecipeDescription.Replace(Environment.NewLine, "<br />"))</p>
+        @if (Model.RecipeDescription != null)
+        {
+            <p>@Html.Raw(Model.RecipeDescription.Replace(Environment.NewLine, "<br />"))</p>
+        }
+        else
+        {
+            <p>No description for this recipe.</p>
+        }
     </div>
     <form method="post" asp-controller="Recipes" asp-action="Favorites" asp-route-recipeId="@Model.Id">
         @if (!ViewBag.FavoriteSaved && SignInManager.IsSignedIn(User))
