@@ -25,5 +25,6 @@ namespace RecipeManagerCoreMVC.Data
         public string TwitterLink { get; set; }
         public ICollection<RecipeModel> RecipeModels { get; set; }
         public ICollection<FavoriteModel> FavoriteModels { get; set; }
+        public ICollection<ArticleModel> ArticleModels { get; set; }
     }
 }
