@@ -12,8 +12,10 @@ namespace RecipeManagerCoreMVC.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Title")]
         public string ArticleTitle { get; set; }
         [Required]
+        [Display(Name = "Article")]
         public string ArticleBody { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
