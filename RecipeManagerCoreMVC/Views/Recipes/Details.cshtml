@@ -14,7 +14,7 @@
         <img src=@photoPath asp-append-version="true" class="img-fluid" />
     </div>
     <div>
-        <p>@Model.RecipeDescription</p>
+        <p>@Html.Raw(Model.RecipeDescription.Replace(Environment.NewLine, "<br />"))</p>
     </div>
     <form method="post" asp-controller="Recipes" asp-action="Favorites" asp-route-recipeId="@Model.Id">
         @if (!ViewBag.FavoriteSaved && SignInManager.IsSignedIn(User))
