@@ -29,7 +29,9 @@ namespace RecipeManagerCoreMVC.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<ArticleModel> articles = _db.Articles;
+
+            return View(articles);
         }
 
         [HttpGet]
