@@ -17,7 +17,7 @@ namespace RecipeManagerCoreMVC.Models
         [Required]
         [Display(Name = "Article")]
         public string ArticleBody { get; set; }
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
         public string PhotoPath { get; set; }
         public string AuthorId { get; set; }

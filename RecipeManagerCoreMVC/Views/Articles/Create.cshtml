@@ -20,10 +20,15 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <label asp-for="ArticleModel.ArticleTitle" class="col-form-label"></label>
-            <input asp-for="ArticleModel.ArticleTitle" class="form-control" />
-            <label asp-for="ArticleModel.ArticleBody" class="col-form-label mt-3"></label>
-            <textarea asp-for="ArticleModel.ArticleBody" class="form-control" rows="30"></textarea>
+            <div>
+                <label asp-for="ArticleModel.ArticleTitle" class="col-form-label"></label>
+                <input asp-for="ArticleModel.ArticleTitle" class="form-control" />
+                <span asp-validation-for="ArticleModel.ArticleTitle" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="ArticleModel.ArticleBody" class="col-form-label mt-3"></label>
+                <textarea asp-for="ArticleModel.ArticleBody" class="form-control" rows="30"></textarea>
+            </div>
         </div>
     </div>
     <div class="text-center">
@@ -32,3 +37,15 @@
     </div>
 </form>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next(".custom-file-label").html(fileName);
+                $("#img-preview").siblings()[0].hidden = true;
+                $("#img-preview").attr('src', URL.createObjectURL(event.target.files[0])).removeAttr("hidden");
+            });
+        });
+    </script>
+}
