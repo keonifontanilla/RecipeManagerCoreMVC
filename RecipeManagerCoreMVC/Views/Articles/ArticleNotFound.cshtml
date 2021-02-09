@@ -1,0 +1,15 @@
+﻿@model int
+@{
+    ViewData["Title"] = "404 Error";
+}
+
+<div>
+    <h4>404 Not Found Error : </h4>
+    <hr />
+    <h5>
+        Article with Id = @Model not found.
+    </h5>
+</div>
+<a asp-controller="Articles" asp-action="Index" class="btn btn-outline-success mt-2">
+    Back to Recipes
+</a>

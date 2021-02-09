@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using RecipeManagerCoreMVC.Data;
+@inject UserManager<ApplicationUser> UserManager;
+@inject SignInManager<ApplicationUser> SignInManager;
+@model RecipeManagerCoreMVC.Models.ArticleModel;
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var photoPath = "~/Images/UploadedImages/" + (Model.PhotoPath ?? "defaultImg.jpg");
+}
+
+<div class="container">
+    <h1 class="h1 text-center mt-2">@Model.ArticleTitle</h1>
+    <div class="mx-auto my-3" style="width: 600px;">
+        <img src=@photoPath asp-append-version="true" class="img-fluid" />
+    </div>
+    <div>
+        @if (Model.ArticleBody != null)
+        {
+            <p>@Html.Raw(Model.ArticleBody.Replace(Environment.NewLine, "<br />"))</p>
+        }
+        else
+        {
+            <p>No description for this recipe.</p>
+        }
+    </div>
+    <p>
+        <strong>Author: </strong>
+        @if (Model.Author != null)
+        {
+            <a asp-controller="Profile" asp-action="Details" asp-route-userName="@Model.Author.UserName">@Model.Author.UserName</a>
+        }
+    </p>
+    @if (User.HasClaim("IsAdmin", "true"))
+    {
+        <div class="row justify-content-center mt-3">
+            <a asp-controller="Articles" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1 details-btn-w">Edit</a>
+            <form method="post" asp-controller="Articles" asp-action="Delete">
+                <input name="Id" value="@Model.Id" hidden />
+                <button class="btn btn-danger ml-1 details-btn-w" type="submit">Delete</button>
+            </form>
+        </div>
+    }
+</div>

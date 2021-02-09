@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecipeManagerCoreMVC.Data;
 using RecipeManagerCoreMVC.Models;
 using RecipeManagerCoreMVC.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -74,6 +76,39 @@ namespace RecipeManagerCoreMVC.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet("Articles/Article/{id?}/{name?}")]
+        [AllowAnonymous]
+        public IActionResult Details(int? id, string name)
+        {
+            ArticleModel articleModel = _db.Articles
+                .Include(x => x.Author)
+                .FirstOrDefault(x => x.Id == id);
+
+            if (articleModel == null) return ErrorStatusCode404(id);
+
+            return View(articleModel);
+        }
+
+        private IActionResult ErrorStatusCode404(int? id)
+        {
+            try
+            {
+                Response.StatusCode = 404;
+                return View("ArticleNotFound", id.Value);
+            }
+            catch (Exception)
+            {
+                return Error();
+            }
+
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
