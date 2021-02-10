@@ -91,6 +91,66 @@ namespace RecipeManagerCoreMVC.Controllers
             return View(articleModel);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            ArticleModel articleModel = _db.Articles
+                .Include(x => x.Author)
+                .FirstOrDefault(x => x.Id == id);
+
+            if (articleModel == null) return ErrorStatusCode404(id);
+
+            var model = new ArticlesEditViewModel { ArticleModel = articleModel };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ArticlesEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ArticleModel articleModel = _db.Articles
+                    .Include(x => x.Author)
+                    .FirstOrDefault(x => x.Id == model.ArticleModel.Id);
+
+                articleModel.ArticleTitle = model.ArticleModel.ArticleTitle;
+                articleModel.ArticleBody = model.ArticleModel.ArticleBody;
+
+                string FileName = null;
+                if (model.Photo != null)
+                {
+                    if (articleModel.PhotoPath != null)
+                    {
+                        DeleteOldPhotoPath(articleModel);
+                    }
+
+                    var imageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "uploadedImages");
+                    FileName = $"{Guid.NewGuid()}_{model.Photo.FileName}";
+                    var path = Path.Combine(imageFolder, FileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        model.Photo.CopyTo(fileStream);
+                    }
+                    articleModel.PhotoPath = FileName;
+                }
+
+                _db.Articles.Update(articleModel);
+                _db.SaveChanges();
+                return RedirectToAction("Details", new { id = articleModel.Id });
+            }
+
+            return View(model);
+        }
+
+        private void DeleteOldPhotoPath(ArticleModel articleModel)
+        {
+            var oldPhotoPath = Path.Combine(_hostingEnvironment.WebRootPath, "images", "uploadedImages",
+                articleModel.PhotoPath);
+            System.IO.File.Delete(oldPhotoPath);
+        }
+
         private IActionResult ErrorStatusCode404(int? id)
         {
             try
