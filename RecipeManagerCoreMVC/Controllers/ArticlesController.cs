@@ -117,6 +117,7 @@ namespace RecipeManagerCoreMVC.Controllers
 
                 articleModel.ArticleTitle = model.ArticleModel.ArticleTitle;
                 articleModel.ArticleBody = model.ArticleModel.ArticleBody;
+                articleModel.UpdatedDate = DateTime.Now;
 
                 string FileName = null;
                 if (model.Photo != null)
@@ -142,6 +143,21 @@ namespace RecipeManagerCoreMVC.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int? id)
+        {
+            ArticleModel articleModel = _db.Articles.First(x => x.Id == id);
+
+            if (articleModel == null) return ErrorStatusCode404(id);
+
+            if (articleModel.PhotoPath != null) DeleteOldPhotoPath(articleModel);
+
+            _db.Remove(articleModel);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         private void DeleteOldPhotoPath(ArticleModel articleModel)
