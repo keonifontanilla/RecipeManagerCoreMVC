@@ -113,5 +113,21 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return RedirectToAction("Favorites", new { userName = user.UserName });
         }
+
+        public async Task<IActionResult> Articles(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User {userName} cannot be found";
+                return View("NotFound");
+            }
+            ViewBag.UserName = user.UserName;
+
+            IEnumerable<ArticleModel> articleModels = _db.Articles.Where(x => x.AuthorId == user.Id);
+
+            return View(articleModels);
+        }
     }
 }

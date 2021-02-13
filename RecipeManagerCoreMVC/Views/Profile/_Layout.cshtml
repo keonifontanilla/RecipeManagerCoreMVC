@@ -31,7 +31,7 @@
                 <a asp-controller="Profile" asp-action="Recipes" asp-route-userName="@ViewBag.UserName" class="nav-link">My Recipes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">My Articles</a>
+                <a asp-controller="Profile" asp-action="Articles" asp-route-userName="@ViewBag.UserName" class="nav-link">My Articles</a>
             </li>
             <li class="nav-item">
                 <a asp-controller="Profile" asp-action="Favorites" asp-route-userName="@ViewBag.UserName" class="nav-link">My Favorites</a>

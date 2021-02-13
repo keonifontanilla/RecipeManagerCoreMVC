@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using RecipeManagerCoreMVC.Data;
+@inject UserManager<ApplicationUser> UserManager;
+@model IEnumerable<RecipeManagerCoreMVC.Models.ArticleModel>
+@{
+    ViewData["Title"] = "Articles";
+    Layout = "~/Views/Profile/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var article in Model)
+        {
+            var photoPath = "~/Images/UploadedImages/" + (article.PhotoPath ?? "defaultImg.jpg");
+            <div class="col-sm-4 mb-4">
+                <div class="card h-100 rounded-0">
+                    <a asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id" asp-route-name="@article.ArticleTitle">
+                        <img src=@photoPath asp-append-version="true" class="card-top img-fluid" style="width:100%; max-height: 225px" />
+                    </a>
+                    <div class="card-header text-center">
+                        <h5>@article.ArticleTitle</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p class="text-truncate">@article.ArticleBody</p>
+                            <p>@article.CreatedDate</p>
+                            <p>@article.UpdatedDate</p>
+                        </div>
+                    </div>
+                    @if ((UserManager.GetUserName(User) == article.Author.UserName) || User.HasClaim("IsAdmin", "true"))
+                    {
+                        <div class="card-footer text-center">
+                            <div class="row justify-content-center">
+                                <a asp-controller="Articles" asp-action="Edit" asp-route-id="@article.Id" class="btn btn-primary mr-1 details-btn-w">Edit</a>
+                                <form method="post" asp-controller="Articles" asp-action="Delete">
+                                    <input name="Id" value="@article.Id" hidden />
+                                    <button class="btn btn-danger ml-1 details-btn-w" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
