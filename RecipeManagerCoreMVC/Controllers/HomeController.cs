@@ -39,7 +39,15 @@ namespace RecipeManagerCoreMVC.Controllers
                 .Include(x => x.RecipeInfoModel)
                 .Take(3).ToList();
 
-            var model = new HomeIndexViewModel { FeaturedRecipes = featuredRecipes };
+            List<ArticleModel> articles = _db.Articles
+                .OrderBy(x => Guid.NewGuid())
+                .Take(9).ToList();
+
+            var model = new HomeIndexViewModel
+            {
+                FeaturedRecipes = featuredRecipes,
+                ArticleModels = articles
+            };
 
             var user = await _userManager.GetUserAsync(User);
             if (user != null)

@@ -10,5 +10,6 @@ namespace RecipeManagerCoreMVC.ViewModels
     {
         public List<RecipeModel> FeaturedRecipes { get; set; } = new List<RecipeModel>();
         public List<RecipeModel> Favorites { get; set; } = new List<RecipeModel>();
+        public List<ArticleModel> ArticleModels { get; set; } = new List<ArticleModel>();
     }
 }
