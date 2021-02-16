@@ -6,6 +6,7 @@
 #Ignore uploaded images
 RecipeManagerCoreMVC/wwwroot/Images/UploadedImages/*
 !RecipeManagerCoreMVC/wwwroot/Images/UploadedImages/.gitkeep
+!RecipeManagerCoreMVC/wwwroot/Images/UploadedImages/defaultImg.jpg
 
 # User-specific files
 *.rsuser
