@@ -37,10 +37,12 @@ namespace RecipeManagerCoreMVC.Controllers
             List<RecipeModel> featuredRecipes = _db.Recipes
                 .OrderBy(x => Guid.NewGuid())
                 .Include(x => x.RecipeInfoModel)
+                .Include(x => x.Author)
                 .Take(3).ToList();
 
             List<ArticleModel> articles = _db.Articles
                 .OrderBy(x => Guid.NewGuid())
+                .Include(x => x.Author)
                 .Take(9).ToList();
 
             var model = new HomeIndexViewModel

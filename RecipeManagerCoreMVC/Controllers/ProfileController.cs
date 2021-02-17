@@ -114,6 +114,7 @@ namespace RecipeManagerCoreMVC.Controllers
             return RedirectToAction("Favorites", new { userName = user.UserName });
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Articles(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);

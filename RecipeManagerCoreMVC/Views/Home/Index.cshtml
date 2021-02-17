@@ -51,8 +51,13 @@
                     <div class="card-body">
                         <div class="card-text">
                             <p class="text-truncate">@Model.FeaturedRecipes[0].RecipeDescription</p>
-                            <p>@Model.FeaturedRecipes[0].RecipeType</p>
-                            <p>Author: Name</p>
+                            <p>
+                                By: 
+                                @if (@Model.FeaturedRecipes[0].Author != null)
+                                {
+                                    <a asp-controller="Profile" asp-action="Details" asp-route-userName="@Model.FeaturedRecipes[0].Author.UserName">@Model.FeaturedRecipes[0].Author.UserName</a>
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -143,8 +148,18 @@
                         <div class="card-body">
                             <div class="card-text">
                                 <p class="text-truncate">@article.ArticleBody</p>
-                                <p>@article.CreatedDate</p>
-                                <p>@article.UpdatedDate</p>
+                                <p>
+                                    <a asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id" asp-route-name="@article.ArticleTitle">
+                                        <b>Read More...</b>
+                                    </a>
+                                </p>
+                                <p>
+                                    By: 
+                                    @if (article.Author != null)
+                                    {
+                                        <a asp-controller="Profile" asp-action="Details" asp-route-userName="@article.Author.UserName">@article.Author.UserName</a>
+                                    }
+                                </p>
                             </div>
                         </div>
                     </div>
