@@ -35,11 +35,16 @@ namespace RecipeManagerCoreMVC.Controllers
         [AllowAnonymous]
         public IActionResult Index(RecipeType? recipeType)
         {
-            IEnumerable<RecipeModel> recipes = _db.Recipes.Include(x => x.RecipeInfoModel);
+            IEnumerable<RecipeModel> recipes = _db.Recipes
+                .Include(x => x.RecipeInfoModel)
+                .Include(x => x.Author);
 
             if (recipeType != null && recipeType != RecipeType.All)
             {
-                recipes = _db.Recipes.Where(x => x.RecipeType == recipeType).Include(x => x.RecipeInfoModel);
+                recipes = _db.Recipes
+                    .Where(x => x.RecipeType == recipeType)
+                    .Include(x => x.RecipeInfoModel)
+                    .Include(x => x.Author);
                 return View(recipes);
             }
 
@@ -202,7 +207,8 @@ namespace RecipeManagerCoreMVC.Controllers
         {
             IEnumerable<RecipeModel> recipes = _db.Recipes
                 .Where(x => x.RecipeName.Contains(name))
-                .Include(x => x.RecipeInfoModel);
+                .Include(x => x.RecipeInfoModel)
+                .Include(x => x.Author);
             return View(recipes);
         }
 

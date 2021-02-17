@@ -25,17 +25,13 @@
                         <div class="card-text">
                             <p class="text-truncate">@recipe.RecipeDescription</p>
                             <p>@recipe.RecipeType</p>
-                            <p>@recipe.CreatedDate</p>
-                            <p>@recipe.UpdatedDated</p>
-                        </div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <div class="row justify-content-center">
-                            <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-primary mr-1 details-btn-w">Edit</a>
-                            <form method="post" asp-controller="Recipes" asp-action="Delete">
-                                <input name="Id" value="@recipe.Id" hidden />
-                                <button class="btn btn-danger ml-1 details-btn-w" type="submit">Delete</button>
-                            </form>
+                            <p>
+                                By:
+                                @if (recipe.Author != null)
+                                {
+                                    <a asp-controller="Profile" asp-action="Details" asp-route-userName="@recipe.Author.UserName">@recipe.Author.UserName</a>
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>
