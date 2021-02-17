@@ -65,7 +65,10 @@ namespace RecipeManagerCoreMVC.Controllers
             }
             ViewBag.UserName = user.UserName;
 
-            var recipes = _db.Recipes.Include(x => x.RecipeInfoModel).Where(x => x.AuthorId == user.Id);
+            var recipes = _db.Recipes
+                .Include(x => x.RecipeInfoModel)
+                .Include(x => x.Author)
+                .Where(x => x.AuthorId == user.Id);
 
             return View(recipes);
         }
@@ -82,9 +85,10 @@ namespace RecipeManagerCoreMVC.Controllers
             }
             ViewBag.UserName = user.UserName;
 
-            IEnumerable<RecipeModel> recipes = _db.UserFavoriteRecipes
-                .Include(x => x.RecipeModel.RecipeInfoModel)
+            var recipes = _db.UserFavoriteRecipes
                 .Where(x => x.UserId == user.Id)
+                .Include(x => x.RecipeModel)
+                .ThenInclude(x => x.Author)
                 .Select(x => x.RecipeModel);
 
             return View(recipes);
@@ -126,7 +130,9 @@ namespace RecipeManagerCoreMVC.Controllers
             }
             ViewBag.UserName = user.UserName;
 
-            IEnumerable<ArticleModel> articleModels = _db.Articles.Where(x => x.AuthorId == user.Id);
+            IEnumerable<ArticleModel> articleModels = _db.Articles
+                .Where(x => x.AuthorId == user.Id)
+                .Include(x => x.Author);
 
             return View(articleModels);
         }

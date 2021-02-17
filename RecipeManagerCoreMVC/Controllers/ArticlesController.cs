@@ -31,7 +31,7 @@ namespace RecipeManagerCoreMVC.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            IEnumerable<ArticleModel> articles = _db.Articles;
+            IEnumerable<ArticleModel> articles = _db.Articles.Include(x => x.Author);
 
             return View(articles);
         }

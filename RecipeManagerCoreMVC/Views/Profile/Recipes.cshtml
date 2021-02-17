@@ -24,8 +24,13 @@
                         <div class="card-text">
                             <p class="text-truncate">@recipe.RecipeDescription</p>
                             <p>@recipe.RecipeType</p>
-                            <p>@recipe.CreatedDate</p>
-                            <p>@recipe.UpdatedDated</p>
+                            <p>
+                                By:
+                                @if (recipe.Author != null)
+                                {
+                                    <a asp-controller="Profile" asp-action="Details" asp-route-userName="@recipe.Author.UserName">@recipe.Author.UserName</a>
+                                }
+                            </p>
                         </div>
                     </div>
                     @if ((UserManager.GetUserName(User) == recipe.Author.UserName) || User.HasClaim("IsAdmin", "true"))
