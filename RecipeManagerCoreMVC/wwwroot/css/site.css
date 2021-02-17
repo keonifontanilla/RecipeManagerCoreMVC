@@ -5,6 +5,7 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  font-family: 'Rammetto One', cursive, sans-serif;
 }
 
 /* Provide sufficient contrast against white background */
@@ -62,6 +63,7 @@ body {
   /* Margin bottom by footer height */
   padding-top: 70px;
   margin-bottom: 60px;
+  font-family: 'Roboto', sans-serif;
 }
 .footer {
   position: absolute;
@@ -112,14 +114,19 @@ table td input {
     text-align: center;
     position: relative;
     top: -20px;
+    font-family: 'Rammetto One', cursive, sans-serif;
 }
 
 .bg-black {
     background-color: #202020;
 }
 
-#rt-card-body.card-body {
+.rt-card-body {
     padding: .5rem;
+}
+
+.rt-card-body > h5 {
+    font-weight: bold;
 }
 
 .div-height {
@@ -156,6 +163,7 @@ table td input {
     align-items: center;
     text-align: center;
     font-size: 50px;
+    font-family: 'Rammetto One', cursive, sans-serif;
 }
 
 .separator::before, .separator::after {
@@ -207,4 +215,13 @@ table td input {
 .carousel-inner .carousel-item-right,
 .carousel-inner .carousel-item-left {
     transform: translateX(0);
+}
+
+a {
+    color: black !important;
+    font-weight: bold;
+}
+
+.card-header > h5 {
+    font-weight: bold;
 }
