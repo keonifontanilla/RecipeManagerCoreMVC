@@ -8,6 +8,11 @@ a.navbar-brand {
   font-family: 'Rammetto One', cursive, sans-serif;
 }
 
+a.navbar-brand > h1 {
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: #ffd100;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -61,7 +66,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  padding-top: 70px;
+  padding-top: 100px;
   margin-bottom: 60px;
   font-family: 'Roboto', sans-serif;
 }
