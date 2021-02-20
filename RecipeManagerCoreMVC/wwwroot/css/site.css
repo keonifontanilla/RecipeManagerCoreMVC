@@ -67,15 +67,28 @@ html {
 body {
   /* Margin bottom by footer height */
   padding-top: 100px;
-  margin-bottom: 60px;
+  margin-bottom: 300px;
   font-family: 'Roboto', sans-serif;
 }
+
 .footer {
-  position: absolute;
+  /*position: absolute;*/
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  /*line-height: 60px;*/ /* Vertically center the text there */
+  color: #ffd100;
+}
+
+.footer a {
+    color: white !important;
+}
+
+@media(min-width:768px) {
+    .footer {
+        position: absolute;
+        line-height: 60px;
+    }
 }
 
 table td {

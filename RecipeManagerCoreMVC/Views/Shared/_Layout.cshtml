@@ -60,9 +60,36 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-center bg-black">
         <div class="container">
-            &copy; 2020 - RecipeManagerCoreMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row h-100">
+                <div class="col-sm-4 my-auto border-right">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <h1>Recipes</h1>
+                    </a>
+                    <div>
+                        <a asp-area="Identity" asp-page="/Account/Register">Join now for good recipes!</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h2 class="pt-3" style="font-weight: bold;">Connect</h2>
+                    <ul class="px-0" style="list-style-type:none;">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <h2 class="pt-3" style="font-weight: bold;">Information</h2>
+                    <ul class="px-0" style="list-style-type:none;">
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                        <li><a href="#">Terms and Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
