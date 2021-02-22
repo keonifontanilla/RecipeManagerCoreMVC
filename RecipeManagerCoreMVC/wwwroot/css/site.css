@@ -71,8 +71,14 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+@media(max-width:768px) {
+    body {
+        margin-bottom: 350px;
+    }
+}
+
 .footer {
-  /*position: absolute;*/
+  position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
@@ -86,7 +92,6 @@ body {
 
 @media(min-width:768px) {
     .footer {
-        position: absolute;
         line-height: 60px;
     }
 }
