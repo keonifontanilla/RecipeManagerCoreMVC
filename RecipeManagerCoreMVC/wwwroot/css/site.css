@@ -67,23 +67,26 @@ html {
 body {
   /* Margin bottom by footer height */
   padding-top: 100px;
-  margin-bottom: 300px;
   font-family: 'Roboto', sans-serif;
 }
 
+#mainContainer {
+    min-height: calc(100vh - 320px);
+}
+
 @media(max-width:768px) {
-    body {
-        margin-bottom: 350px;
+    #mainContainer {
+        min-height: calc(100vh - 380px);
     }
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  /*line-height: 60px;*/ /* Vertically center the text there */
-  color: #ffd100;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    /*line-height: 60px;*/ /* Vertically center the text there */
+    color: #ffd100;
+    height: 380px;
 }
 
 .footer a {
@@ -92,6 +95,7 @@ body {
 
 @media(min-width:768px) {
     .footer {
+        height: 320px;
         line-height: 60px;
     }
 }
