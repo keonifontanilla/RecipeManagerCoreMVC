@@ -40,7 +40,7 @@
             <h4 class="recipeType-bg-gold">Featured</h4>
         </div>
         <div class="row flex-column div-height">
-            <div class="col-sm-12 px-1 pb-3 main-random-card" style="width: 40.5rem;">
+            <div class="col-sm-12 px-1 pb-3 main-random-card">
                 <div class="card rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[0].Id" asp-route-name="@Model.FeaturedRecipes[0].RecipeName">
                         <img src=@featuredPhoto1 asp-append-version="true" class="card-top img-fluid" />
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-auto mb-1 ml-5 random-card" style="width: 25rem;">
+            <div class="col-auto mb-1 ml-5 random-card">
                 <div class="card rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[1].Id" asp-route-name="@Model.FeaturedRecipes[1].RecipeName">
                         <img src=@featuredPhoto2 asp-append-version="true" class="card-top img-fluid" />
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-auto mt-4 ml-5 pt-2 random-card" style="width: 25rem;">
+            <div class="col-auto mt-4 ml-5 pt-2 random-card">
                 <div class="card rounded-0">
                     <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[2].Id" asp-route-name="@Model.FeaturedRecipes[2].RecipeName">
                         <img src=@featuredPhoto3 asp-append-version="true" class="card-top img-fluid" />

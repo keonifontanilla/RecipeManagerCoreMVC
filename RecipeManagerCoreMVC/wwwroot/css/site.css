@@ -152,14 +152,6 @@ table td input {
     font-weight: bold;
 }
 
-.div-height {
-    height: 700px;
-}
-
-.random-card.ml-5 {
-    margin-left: 4.5rem !important;
-}
-
 .recipeType-card {
     height: 200px;
     width: auto;
@@ -169,14 +161,57 @@ table td input {
     object-fit: cover;
 }
 
-.main-random-card img {
-    width: 100%;
-    max-height: 425.17px;
+@media(min-width:768px) {
+    .div-height {
+        height: 700px;
+    }
+
+    .main-random-card {
+        width: 40.5rem;
+    }
+
+    .main-random-card img {
+        width: 100%;
+        max-height: 425.17px;
+    }
+
+    .random-card {
+        width: 25rem;
+    }
+
+    .random-card img {
+        width: 100%;
+        max-height: 245px;
+    }
+    
+    .random-card.ml-5 {
+        margin-left: 4.5rem !important;
+    }
 }
 
-.random-card img {
-    width: 100%;
-    max-height: 245px;
+@media(max-width:768px) {
+    .div-height {
+        height: 1050px;
+    }
+
+    .main-random-card {
+        width: 100%;
+    }
+
+    .main-random-card img {
+        width: 100%;
+        max-height: 225px;
+    }
+
+    .random-card {
+        width: 100%;
+        margin: auto !important;
+    }
+
+    .random-card img {
+        width: 100%;
+        max-height: 225px;
+    }
 }
 
 /* Horizontal line with text in the middle
