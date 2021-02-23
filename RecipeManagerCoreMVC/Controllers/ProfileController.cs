@@ -89,6 +89,8 @@ namespace RecipeManagerCoreMVC.Controllers
                 .Where(x => x.UserId == user.Id)
                 .Include(x => x.RecipeModel)
                 .ThenInclude(x => x.Author)
+                .Include(x => x.RecipeModel)
+                .ThenInclude(x => x.RecipeInfoModel)
                 .Select(x => x.RecipeModel);
 
             return View(recipes);
