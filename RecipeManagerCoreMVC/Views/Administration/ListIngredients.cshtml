@@ -1,0 +1,53 @@
+﻿@model IEnumerable<RecipeManagerCoreMVC.Models.IngredientModel>; 
+@{
+    ViewData["Title"] = "ListIngredients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ingredients</h1>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Ingredient</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            @foreach (var ingredient in Model)
+            {
+                <tr>
+                    <td>@ingredient.Id</td>
+                    <td>@ingredient.Ingredient</td>
+                    <td>
+                        <form method="post" asp-controller="Administration" asp-action="DeleteIngredient" asp-route-id="@ingredient.Id">
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteIngredientModal_@ingredient.Id">Delete</a>
+                            <div class="modal fade" id="deleteIngredientModal_@ingredient.Id" tabindex="-1" role="dialog" aria-labelledby="deleteIngredientModal_@ingredient.Id" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteIngredientModal_@ingredient.Id">Delete User</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete user? This action cannot be undone.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-primary">Yes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RecipeManagerCoreMVC.Data;
+using RecipeManagerCoreMVC.Models;
 using RecipeManagerCoreMVC.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace RecipeManagerCoreMVC.Controllers
     public class AdministrationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _db;
 
-        public AdministrationController(UserManager<ApplicationUser> userManager)
+        public AdministrationController(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         {
             _userManager = userManager;
+            _db = db;
         }
 
         [HttpGet]
@@ -110,6 +113,13 @@ namespace RecipeManagerCoreMVC.Controllers
             }
 
             return View("ListUsers");
+        }
+
+        public IActionResult ListIngredients()
+        {
+            IEnumerable<IngredientModel> ingredientModels = _db.Ingredients;
+
+            return View(ingredientModels);
         }
     }
 }
