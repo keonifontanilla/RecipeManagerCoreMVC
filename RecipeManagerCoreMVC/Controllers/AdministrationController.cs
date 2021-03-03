@@ -117,9 +117,24 @@ namespace RecipeManagerCoreMVC.Controllers
 
         public IActionResult ListIngredients()
         {
-            IEnumerable<IngredientModel> ingredientModels = _db.Ingredients;
+            var adminIngredientViewModel = new AdminIngredientViewModel();
+            adminIngredientViewModel.IngredientModels = _db.Ingredients;
 
-            return View(ingredientModels);
+            return View(adminIngredientViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddIngredient(AdminIngredientViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Ingredients.Add(model.IngredientModel);
+                _db.SaveChanges();
+                return RedirectToAction("ListIngredients");
+            }
+
+            return View("ListIngredients");
         }
     }
 }

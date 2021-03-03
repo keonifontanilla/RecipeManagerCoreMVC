@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RecipeManagerCoreMVC.Models.IngredientModel>; 
+﻿@model RecipeManagerCoreMVC.ViewModels.AdminIngredientViewModel; 
 @{
     ViewData["Title"] = "ListIngredients";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,6 +6,28 @@
 
 <h1>Ingredients</h1>
 
+<form method="post" asp-controller="Administration" asp-action="AddIngredient" class="mb-1">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addIngredientModal">Add</a>
+    <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="addIngredientModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addIngredientModal">Add Ingredient</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="IngredientModel.Ingredient" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
@@ -15,9 +37,9 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model.Any())
+        @if (Model.IngredientModels.Any())
         {
-            @foreach (var ingredient in Model)
+            @foreach (var ingredient in Model.IngredientModels)
             {
                 <tr>
                     <td>@ingredient.Id</td>
@@ -29,13 +51,13 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteIngredientModal_@ingredient.Id">Delete User</h5>
+                                            <h5 class="modal-title" id="deleteIngredientModal_@ingredient.Id">Delete Ingredient</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure you want to delete user? This action cannot be undone.
+                                            Are you sure you want to delete ingredient? This action cannot be undone.
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
