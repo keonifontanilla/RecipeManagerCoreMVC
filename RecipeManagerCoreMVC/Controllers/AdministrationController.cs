@@ -136,5 +136,17 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return View("ListIngredients");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteIngredient(int? id)
+        {
+            IngredientModel ingredientModel = _db.Ingredients.FirstOrDefault(x => x.Id == id);
+
+            _db.Ingredients.Remove(ingredientModel);
+            _db.SaveChanges();
+
+            return RedirectToAction("ListIngredients");
+        }
     }
 }
