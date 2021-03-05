@@ -2,9 +2,6 @@
 @{
     ViewData["Title"] = "Home Page";
     var typePhotos = new[] { "breakfastImg.jpg", "mainImg.jpg", "sideImg.jpg", "dessertImg.jpg", "drinkImg.jpg" };
-    var featuredPhoto1 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
-    var featuredPhoto2 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
-    var featuredPhoto3 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
 }
 
 <div class="container">
@@ -39,50 +36,56 @@
         <div class="recipeType-div">
             <h4 class="recipeType-bg-gold">Featured</h4>
         </div>
-        <div class="row flex-column div-height">
-            <div class="col-sm-12 px-1 pb-3 main-random-card">
-                <div class="card rounded-0">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[0].Id" asp-route-name="@Model.FeaturedRecipes[0].RecipeName">
-                        <img src=@featuredPhoto1 asp-append-version="true" class="card-top img-fluid" />
-                    </a>
-                    <div class="card-header text-center">
-                        <h5>@Model.FeaturedRecipes[0].RecipeName</h5>
+        @if (Model.FeaturedRecipes.Count >= 3)
+        {
+            var featuredPhoto1 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[0].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+            var featuredPhoto2 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[1].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+            var featuredPhoto3 = "~/Images/UploadedImages/" + (Model.FeaturedRecipes[2].RecipeInfoModel?.PhotoPath ?? "defaultImg.jpg");
+            <div class="row flex-column div-height">
+                <div class="col-sm-12 px-1 pb-3 main-random-card">
+                    <div class="card rounded-0">
+                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[0].Id" asp-route-name="@Model.FeaturedRecipes[0].RecipeName">
+                            <img src=@featuredPhoto1 asp-append-version="true" class="card-top img-fluid" />
+                        </a>
+                        <div class="card-header text-center">
+                            <h5>@Model.FeaturedRecipes[0].RecipeName</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="text-truncate">@Model.FeaturedRecipes[0].RecipeDescription</p>
+                                <p>
+                                    By:
+                                    @if (@Model.FeaturedRecipes[0].Author != null)
+                                    {
+                                        <a asp-controller="Profile" asp-action="Details" asp-route-userName="@Model.FeaturedRecipes[0].Author.UserName">@Model.FeaturedRecipes[0].Author.UserName</a>
+                                    }
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="card-text">
-                            <p class="text-truncate">@Model.FeaturedRecipes[0].RecipeDescription</p>
-                            <p>
-                                By: 
-                                @if (@Model.FeaturedRecipes[0].Author != null)
-                                {
-                                    <a asp-controller="Profile" asp-action="Details" asp-route-userName="@Model.FeaturedRecipes[0].Author.UserName">@Model.FeaturedRecipes[0].Author.UserName</a>
-                                }
-                            </p>
+                </div>
+                <div class="col-auto mb-1 ml-5 random-card">
+                    <div class="card rounded-0">
+                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[1].Id" asp-route-name="@Model.FeaturedRecipes[1].RecipeName">
+                            <img src=@featuredPhoto2 asp-append-version="true" class="card-top img-fluid" />
+                        </a>
+                        <div class="card-header text-center">
+                            <h5>@Model.FeaturedRecipes[1].RecipeName</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto mt-4 ml-5 pt-2 random-card">
+                    <div class="card rounded-0">
+                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[2].Id" asp-route-name="@Model.FeaturedRecipes[2].RecipeName">
+                            <img src=@featuredPhoto3 asp-append-version="true" class="card-top img-fluid" />
+                        </a>
+                        <div class="card-header text-center">
+                            <h5>@Model.FeaturedRecipes[2].RecipeName</h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-auto mb-1 ml-5 random-card">
-                <div class="card rounded-0">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[1].Id" asp-route-name="@Model.FeaturedRecipes[1].RecipeName">
-                        <img src=@featuredPhoto2 asp-append-version="true" class="card-top img-fluid" />
-                    </a>
-                    <div class="card-header text-center">
-                        <h5>@Model.FeaturedRecipes[1].RecipeName</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-auto mt-4 ml-5 pt-2 random-card">
-                <div class="card rounded-0">
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@Model.FeaturedRecipes[2].Id" asp-route-name="@Model.FeaturedRecipes[2].RecipeName">
-                        <img src=@featuredPhoto3 asp-append-version="true" class="card-top img-fluid" />
-                    </a>
-                    <div class="card-header text-center">
-                        <h5>@Model.FeaturedRecipes[2].RecipeName</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
     <div class="separator mt-5">My Favorites</div>
     <div class="container text-center my-3">
