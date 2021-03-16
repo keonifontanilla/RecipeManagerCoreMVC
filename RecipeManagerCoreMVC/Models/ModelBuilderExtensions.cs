@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using RecipeManagerCoreMVC.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +65,32 @@ namespace RecipeManagerCoreMVC.Models
                 new RecipeModel { Id = 1, RecipeName = "Recipe1" },
                 new RecipeModel { Id = 2, RecipeName = "Recipe2" },
                 new RecipeModel { Id = 3, RecipeName = "Recipe3" }
+            );
+
+            var adminId = "42f23ef6-3027-4c2b-aec0-62a7677b6597";
+            var password = new PasswordHasher<ApplicationUser>();
+
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
+                {
+                    Id = adminId,
+                    UserName = "admin",
+                    NormalizedUserName = "admin".ToUpper(),
+                    Email = "admin@g.com",
+                    NormalizedEmail = "admin@g.com".ToUpper(),
+                    EmailConfirmed = true,
+                    PasswordHash = password.HashPassword(null, "123")
+                }
+            );
+
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
+                new IdentityUserClaim<string>
+                {
+                    Id = 1,
+                    UserId = adminId,
+                    ClaimType = "IsAdmin",
+                    ClaimValue = "true"
+                }
             );
         }
     }
