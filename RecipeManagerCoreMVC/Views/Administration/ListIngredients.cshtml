@@ -33,7 +33,7 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Ingredient</th>
-            <th scope="col"></th>
+            <th scope="col" style="width: 25%"></th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +45,7 @@
                     <td>@ingredient.Id</td>
                     <td>@ingredient.Ingredient</td>
                     <td>
-                        <form method="post" asp-controller="Administration" asp-action="DeleteIngredient" asp-route-id="@ingredient.Id">
+                        <form method="post" asp-controller="Administration" asp-action="DeleteIngredient" asp-route-id="@ingredient.Id" class="inline-form-btn">
                             <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteIngredientModal_@ingredient.Id">Delete</a>
                             <div class="modal fade" id="deleteIngredientModal_@ingredient.Id" tabindex="-1" role="dialog" aria-labelledby="deleteIngredientModal_@ingredient.Id" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -67,6 +67,7 @@
                                 </div>
                             </div>
                         </form>
+                        <partial name="EditIngredient" model="ingredient" />
                     </td>
                 </tr>
             }

@@ -148,5 +148,22 @@ namespace RecipeManagerCoreMVC.Controllers
 
             return RedirectToAction("ListIngredients");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditIngredient(IngredientModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                IngredientModel ingredient = _db.Ingredients.FirstOrDefault(x => x.Id == model.Id);
+                ingredient.Ingredient = model.Ingredient;
+
+                _db.Ingredients.Update(ingredient);
+                _db.SaveChanges();
+                return RedirectToAction("ListIngredients");
+            }
+
+            return View("ListIngredients");
+        }
     }
 }
