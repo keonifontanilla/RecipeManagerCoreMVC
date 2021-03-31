@@ -7,7 +7,7 @@
 <h1>Ingredients</h1>
 
 <form method="post" asp-controller="Administration" asp-action="AddIngredient" class="mb-1">
-    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addIngredientModal">Add</a>
+    <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#addIngredientModal">Add</a>
     <div class="modal fade" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="addIngredientModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -46,7 +46,7 @@
                     <td>@ingredient.Ingredient</td>
                     <td>
                         <form method="post" asp-controller="Administration" asp-action="DeleteIngredient" asp-route-id="@ingredient.Id" class="inline-form-btn">
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteIngredientModal_@ingredient.Id">Delete</a>
+                            <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#deleteIngredientModal_@ingredient.Id">Delete</a>
                             <div class="modal fade" id="deleteIngredientModal_@ingredient.Id" tabindex="-1" role="dialog" aria-labelledby="deleteIngredientModal_@ingredient.Id" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">

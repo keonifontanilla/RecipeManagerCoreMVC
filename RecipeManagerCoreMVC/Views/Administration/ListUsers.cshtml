@@ -6,7 +6,7 @@
 
 <h1>List Users</h1>
 
-<a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary mb-3">Add new user</a>
+<a asp-area="Identity" asp-page="/Account/Register" class="btn btn-dark mb-3 btn-font-white">Add new user</a>
 @if (Model.Any())
 {
     <table class="table table-bordered">
@@ -25,9 +25,9 @@
                     <td>@user.UserName</td>
                     <td>
                         <form method="post" asp-controller="Administration" asp-action="DeleteUser" asp-route-id="@user.Id">
-                            <a asp-controller="Profile" asp-action="Details" asp-route-userName="@user.UserName" class="btn btn-primary">View</a>
-                            <a asp-controller="Administration" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">Delete</a>
+                            <a asp-controller="Profile" asp-action="Details" asp-route-userName="@user.UserName" class="btn btn-dark btn-font-white">View</a>
+                            <a asp-controller="Administration" asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-dark btn-font-white">Edit</a>
+                            <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#deleteModal_@user.Id">Delete</a>
                             <div class="modal fade" id="deleteModal_@user.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@user.Id" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">

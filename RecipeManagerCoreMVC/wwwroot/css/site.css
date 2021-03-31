@@ -291,3 +291,7 @@ a {
 .inline-form-btn {
     display: inline;
 }
+
+.btn-font-white {
+    color: white !important;
+}

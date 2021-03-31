@@ -1,7 +1,7 @@
 ﻿@model RecipeManagerCoreMVC.Models.IngredientModel;  
 
 <form method="post" asp-controller="Administration" asp-action="EditIngredient" class="inline-form-btn">
-    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#editIngredientModal_@Model.Id">Edit</a>
+    <a href="#" class="btn btn-dark btn-font-white" data-toggle="modal" data-target="#editIngredientModal_@Model.Id">Edit</a>
     <div class="modal fade" id="editIngredientModal_@Model.Id" tabindex="-1" role="dialog" aria-labelledby="editIngredientModal_@Model.Id" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
